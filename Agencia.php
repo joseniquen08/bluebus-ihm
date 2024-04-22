@@ -1,0 +1,93 @@
+<?php
+
+include_once './Conexion.php';
+
+class Agencia {
+    // LOGIN DE USUARIO
+    function validarLogin($usuario_correo, $contraseña) {
+        $cn = new Conexion();
+        $sql = "SELECT VerificarCredenciales('$usuario_correo', '$contraseña') AS resultado";
+        $res = mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
+        $row = mysqli_fetch_assoc($res);
+        $resultado = $row['resultado'];
+        return $resultado === '1';
+    }
+
+    // REGISTRO DE USUARIO
+    function registrarUsuario($nombres, $apellidos, $correo, $contraseña) {
+        $cn = new Conexion();
+        $sql = "CALL RegistrarUsuario('$nombres', '$apellidos', '$correo', '$contraseña')";
+        mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
+    }
+
+    // OBTENER DATOS DE USUARIO POR CORREO
+    function obtenerUsuarioPorCorreo($usuario_correo) {
+        $cn = new Conexion();
+        $sql = "CALL ObtenerUsuarioPorCorreo('$usuario_correo')";
+        $res = mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
+        $row = mysqli_fetch_assoc($res);
+        $codigo_usuario = $row['COD_USER'];
+        return $codigo_usuario;
+    }
+
+    // COMPRA DE BOLETOS
+    function comprarBoleto($usuario_cod, $viaje_cod, $asiento_id) {
+        $cn = new Conexion();
+        $sql = "CALL ComprarBoleto('$usuario_cod', '$viaje_cod', $asiento_id)";
+        $res = mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
+        $row = mysqli_fetch_assoc($res);
+        $codigo_venta = $row['nuevo_codigo_venta'];
+        return $codigo_venta;
+    }
+
+    // ASIENTOS OCUPADOS POR VIAJE
+    function mostrarAsientosOcupados($viaje_cod) {
+        $cn = new Conexion();
+        $sql = "CALL MostrarAsientosOcupados('$viaje_cod')";
+        $res = mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
+        $vec = array();
+        while ($f = mysqli_fetch_array($res)) {
+            $vec[] = $f;
+        }
+        return $vec;
+    }
+
+    // ASIENTOS DISPONIBLES POR VIAJE
+    function mostrarAsientosDisponibles($viaje_cod) {
+        $cn = new Conexion();
+        $sql = "CALL MostrarAsientosDisponibles('$viaje_cod')";
+        $res = mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
+        $vec = array();
+        while ($f = mysqli_fetch_array($res)) {
+            $vec[] = $f;
+        }
+        return $vec;
+    }
+
+    // ACTUALIZAR DATOS DE USUARIO
+    function actualizarUsuario($codigo, $nombres, $apellidos, $correo, $contraseña) {
+        $cn = new Conexion();
+        $sql = "CALL ActualizarUsuario('$codigo', '$nombres', '$apellidos', '$correo', '$contraseña')";
+        mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
+    }
+
+    // CANCELAR RESERVA O COMPRA
+    function cancelarReserva($reserva_id) {
+        $cn = new Conexion();
+        $sql = "CALL CancelarReserva($reserva_id)";
+        mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
+    }
+
+    // BÚSQUEDA DE VIAJES POR ORIGEN, DESTINO Y FECHA
+    function buscarViajes($origen_cod, $destino_cod, $fecha_via) {
+        $cn = new Conexion();
+        $sql = "CALL BuscarViajes('$origen_cod', '$destino_cod', '$fecha_via')";
+        $res = mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
+        $vec = array();
+        while ($f = mysqli_fetch_array($res)) {
+            $vec[] = $f;
+        }
+        return $vec;
+    }
+}
+?>

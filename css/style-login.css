@@ -1,0 +1,70 @@
+/*Formato de la página web*/
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+/* Contenedor principal */
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    min-height: 100vh;
+}
+
+/*Formulario*/
+form {
+    background-color: #F8F8F9;
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    width: 420px;
+    text-align: center;
+    border-radius: 50px;
+}
+
+form h2 {
+    margin-bottom: 20px;
+}
+
+form label {
+    margin-bottom: 5px;
+}
+
+form input {
+    margin-bottom: 20px;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+form button {
+    border-radius: 10px;
+    padding: 10px;
+}
+
+form button:hover {
+    cursor: pointer;
+}
+
+form a {
+    padding-top: 20px;
+    text-decoration: underline;
+}
+
+/* Estilos para el logo */
+.logo {
+    width: 100px; /* Ajusta el tamaño del logo según lo necesites */
+    margin-bottom: 5px; /* Agregado para espacio entre el logo y el formulario */
+}
+
+body {
+    background-color: #1E62F0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
