@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,106 +13,143 @@
     /* Estilos personalizados */
     /* CSS personalizado para centrar el logo en la esquina y hacerlo responsivo */
     .navbar-brand {
-      margin-right: auto; /* Centrar el logo en la esquina izquierda */
+      margin-right: auto;
+      /* Centrar el logo en la esquina izquierda */
     }
-    
+
     /* CSS personalizado para ajustar el tamaño del logo */
     .navbar-brand img {
-      width: 50px; /* Tamaño del logo */
+      width: 50px;
+      /* Tamaño del logo */
       height: 50px;
     }
 
-    @media (max-width: 991.98px) { /* Ajustar el tamaño del logo para dispositivos móviles */
+    @media (max-width: 991.98px) {
+
+      /* Ajustar el tamaño del logo para dispositivos móviles */
       .navbar-brand img {
-        max-width: 120px; /* Tamaño máximo del logo en dispositivos móviles */
+        max-width: 120px;
+        /* Tamaño máximo del logo en dispositivos móviles */
       }
     }
-    
+
     body {
-      background-color: #c1e8ff; /* Fondo celeste */
-      color: #021024; /* Texto azul oscuro */
+      background-color: #c1e8ff;
+      /* Fondo celeste */
+      color: #021024;
+      /* Texto azul oscuro */
     }
+
     .navbar {
-      background-color: #052659; /* Azul oscuro para la barra de navegación */
+      background-color: #052659;
+      /* Azul oscuro para la barra de navegación */
     }
+
     .nav-link {
-      color: #fff; /* Texto celeste para los enlaces de navegación */
+      color: #fff;
+      /* Texto celeste para los enlaces de navegación */
     }
+
     .carousel-caption {
-      background-color: rgba(5, 38, 89, 0.7); /* Fondo semi-transparente azul oscuro para las descripciones en el slider */
+      background-color: rgba(5, 38, 89, 0.7);
+      /* Fondo semi-transparente azul oscuro para las descripciones en el slider */
     }
+
     .card {
-      background-color: #7da0ca; /* Fondo celeste para las tarjetas de destinos */
-      border: none; /* Sin borde */
+      background-color: #7da0ca;
+      /* Fondo celeste para las tarjetas de destinos */
+      border: none;
+      /* Sin borde */
     }
+
     .card:hover {
-      transform: scale(1.05); /* Efecto de escala al hacer hover */
-      z-index: 1; /* Se eleva al hacer hover */
+      transform: scale(1.05);
+      /* Efecto de escala al hacer hover */
+      z-index: 1;
+      /* Se eleva al hacer hover */
     }
+
     .carousel-item img {
-      height: 400px; /* Aumenta la altura de las imágenes del slider */
+      height: 400px;
+      /* Aumenta la altura de las imágenes del slider */
     }
-    .carousel-control-prev, .carousel-control-next {
-      top: 50%; /* Posiciona los botones de control en el centro vertical */
-      transform: translateY(-50%); /* Centra verticalmente los botones de control */
-      z-index: 1; /* Asegura que estén encima del contenido del slider */
-      color: #5483b3; /* Cambia el color de las flechas del slider */
+
+    .carousel-control-prev,
+    .carousel-control-next {
+      top: 50%;
+      /* Posiciona los botones de control en el centro vertical */
+      transform: translateY(-50%);
+      /* Centra verticalmente los botones de control */
+      z-index: 1;
+      /* Asegura que estén encima del contenido del slider */
+      color: #5483b3;
+      /* Cambia el color de las flechas del slider */
     }
+
     .navbar.sticky-top {
-      animation: fadeInDown 0.5s; /* Animación para mostrar la barra pegajosa */
+      animation: fadeInDown 0.5s;
+      /* Animación para mostrar la barra pegajosa */
     }
+
     @keyframes fadeInDown {
       0% {
         opacity: 0;
         transform: translateY(-100%);
       }
+
       100% {
         opacity: 1;
         transform: translateY(0);
       }
     }
+
     .bg-light {
-      background-color: #c1e8ff; /* Fondo celeste para la sección adicional */
+      background-color: #c1e8ff;
+      /* Fondo celeste para la sección adicional */
     }
+
     .bg-info {
       background-color: #052659 !important;
     }
+
     .text-info {
-      color: #021024; /* Texto azul oscuro para el pie de página */
+      color: #021024;
+      /* Texto azul oscuro para el pie de página */
     }
   </style>
 </head>
+
 <body>
 
   <!-- Barra de Navegación -->
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-      <div class="container">
-        <a class="navbar-brand" href="index.php">
-          <img src="./images/BlueBus_logo.png" alt="BlueBus Logo" class="logo mb-4">
-        </a>
-        <!-- Botón de hamburguesa para dispositivos móviles -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <!-- Elementos de navegación -->
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="index.php"><i class="bi bi-house-door"></i> Inicio</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#"><i class="bi bi-info-circle"></i> Nosotros</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#"><i class="bi bi-people"></i> Servicios</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#"><i class="bi bi-envelope"></i> Contacto</a>
-            </li>
-          </ul>
-        </div>
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.php">
+        <img src="./images/BlueBus_logo.png" alt="BlueBus Logo" class="logo mb-4">
+      </a>
+      <!-- Botón de hamburguesa para dispositivos móviles -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- Elementos de navegación -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.php"><i class="bi bi-house-door"></i> Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="bi bi-info-circle"></i> Nosotros</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="bi bi-people"></i> Servicios</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="bi bi-envelope"></i> Contacto</a>
+          </li>
+        </ul>
       </div>
-    </nav>
+    </div>
+  </nav>
 
 
   <!-- Slider de Viajes -->
@@ -143,10 +181,10 @@
       <span class="visually-hidden">Next</span>
     </button>
   </div>
-  
+
   <br></br>
   <br></br>
-  
+
   <!-- Contenedores de Viajes -->
   <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
@@ -159,7 +197,7 @@
                 <div class="card-body">
                   <h5 class="card-title">Lima - Tumbes</h5>
                   <p class="card-text">Explora los mejores destinos costeros con nosotros.</p>
-                  <a href="selecAsiento.php" class="btn btn-primary"><i class="bi bi-eye"></i> Ver Detalles</a>
+                  <a href="seleccionar_asiento.php?COD_VIA=VIA008" class="btn btn-primary"><i class="bi bi-eye"></i> Ver Detalles</a>
                 </div>
               </div>
             </div>
@@ -254,4 +292,5 @@
   <!-- Script de Bootstrap -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
