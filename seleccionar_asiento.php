@@ -1,18 +1,38 @@
 <?php
 require_once './Conexion.php';
 
+
 $cod_via = $_REQUEST["COD_VIA"];
 
+
 $cn = new Conexion();
-$sql = "SELECT v.HORA_VIA, v.FECHA_VIA, v.DURACION, d.NOM_DESTINO AS Destino, dd.NOM_DESTINO AS Origen FROM viaje AS v JOIN destino AS d ON d.COD_DESTINO = v.DESTINO JOIN destino AS dd ON dd.COD_DESTINO = v.ORIGEN WHERE COD_VIA = '$cod_via'";
+$sql = "SELECT b.NUM_ASIENTOS AS Asientos, v.HORA_VIA, v.FECHA_VIA, v.DURACION, d.NOM_DESTINO AS Destino, dd.NOM_DESTINO AS Origen, v.PRECIO_BASE AS PRECIO FROM viaje AS v JOIN destino AS d ON d.COD_DESTINO = v.DESTINO JOIN destino AS dd ON dd.COD_DESTINO = v.ORIGEN JOIN bus AS b ON b.PLACA = v.BUS WHERE COD_VIA = '$cod_via'";
 $res = mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
 $row = mysqli_fetch_assoc($res);
-print_r($row)
+
+
+function fechaCastellano ($fecha) {
+  $fecha = substr($fecha, 0, 10);
+  $numeroDia = date('d', strtotime($fecha));
+  $dia = date('l', strtotime($fecha));
+  $mes = date('F', strtotime($fecha));
+  $anio = date('Y', strtotime($fecha));
+  $dias_ES = array("Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo");
+  $dias_EN = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
+  $nombredia = str_replace($dias_EN, $dias_ES, $dia);
+  $meses_ES = array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
+  $meses_EN = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+  $nombreMes = str_replace($meses_EN, $meses_ES, $mes);
+  return $nombredia." ".$numeroDia." de ".$nombreMes." de ".$anio;
+}
 ?>
+
+
 
 
 <!DOCTYPE html>
 <html lang="es">
+
 
 <head>
   <meta charset="UTF-8">
@@ -29,15 +49,17 @@ print_r($row)
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 </head>
 
+
 <body>
   <?php require_once "components/navbar.php"; ?>
+
 
   <main class="py-4 d-flex flex-column align-items-start mx-auto" style="max-width: 64rem;">
     <div class="w-100 text-center mb-4">
       <p class="fs-2 fw-bolder">Elección de asientos</p>
       <div class="d-flex flex-column justify-content-center align-items-center fs-5">
         <p class="fs-4 fw-semibold"><?= $row["Origen"] ?> - <?= $row["Destino"] ?></p>
-        <p><?= date_format(date_create($row["FECHA_VIA"]), "d/m/Y") ?> <?= $row["HORA_VIA"] ?></p>
+        <p><?= date_format(date_create($row["FECHA_VIA"]), "d/m/Y") ?> - <?= $row["HORA_VIA"] ?></p>
       </div>
     </div>
     <div class="d-flex w-100" style="gap: 2rem;">
@@ -45,250 +67,33 @@ print_r($row)
         <div class="card-header px-4 py-3">
           <p class="mb-0 fw-semibold">Elige tus asientos</p>
         </div>
-        <div class="card-body py-4 d-flex justify-content-center">
+        <div class="card-body py-4 d-flex flex-column justify-content-center align-items-center" style="gap:2rem">
           <div class="border border-primary p-3 rounded-4 text-center">
             <p class="fs-5 fw-semibold mb-4">Primer piso</p>
-            <ul class="d-flex flex-wrap asientos-container m-0">
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-1" autocomplete="off" disabled>
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-1">1</label><br>
+            <ul id="cardAsientos" class="d-flex flex-wrap asientos-container m-0">
+              <?php
+              $nrAsientos = $row['Asientos'];
+              $i = 1;
+              $j = 2;
+              while($i<=$nrAsientos){
+                if($j == 4){?>
+              <li class="asiento-item"> </li>
+          <?php
+                $j=0;
+                }else{?>
+              <li id="asiento" class="asiento-item">
+                <input onclick="handleClick('<?php echo $row['PRECIO'] ?>', <?php echo $i;?>)" type="checkbox" class="btn-check" id="asiento-<?php echo $i;?>" autocomplete="off" >
+                <label class="btn btn-outline-primary asiento-btn" for="asiento-<?php echo $i;?>"><?php echo $i;?></label><br>
               </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-2" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-2">2</label><br>
-              </li>
-              <li class="asiento-item"></li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-3" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-3">3</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-4" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-4">4</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-5" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-5">5</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-6" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-6">6</label><br>
-              </li>
-              <li class="asiento-item"></li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-7" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-7">7</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-8" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-8">8</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-9" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-9">9</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-10" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-10">10</label><br>
-              </li>
-              <li class="asiento-item"></li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-11" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-11">11</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-12" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-12">12</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-13" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-13">13</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-14" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-14">14</label><br>
-              </li>
-              <li class="asiento-item"></li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-15" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-15">15</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-16" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-16">16</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-17" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-17">17</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-18" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-18">18</label><br>
-              </li>
-              <li class="asiento-item"></li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-19" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-19">19</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-20" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-20">20</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-21" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-21">21</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-22" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-22">22</label><br>
-              </li>
-              <li class="asiento-item"></li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-23" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-23">23</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-24" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-24">24</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-25" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-25">25</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-26" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-26">26</label><br>
-              </li>
-              <li class="asiento-item"></li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-27" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-27">27</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-28" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-28">28</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-29" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-29">29</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-30" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-30">30</label><br>
-              </li>
-              <li class="asiento-item"></li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-31" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-31">31</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-32" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-32">32</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-33" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-33">33</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-34" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-34">34</label><br>
-              </li>
-              <li class="asiento-item"></li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-35" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-35">35</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-36" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-36">36</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-37" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-37">37</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-38" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-38">38</label><br>
-              </li>
-              <li class="asiento-item"></li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-39" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-39">39</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-40" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-40">40</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-41" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-41">41</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-42" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-42">42</label><br>
-              </li>
-              <li class="asiento-item"></li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-43" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-43">43</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-44" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-44">44</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-45" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-45">45</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-46" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-46">46</label><br>
-              </li>
-              <li class="asiento-item"></li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-47" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-47">47</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-48" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-48">48</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-49" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-49">49</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-50" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-50">50</label><br>
-              </li>
-              <li class="asiento-item"></li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-51" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-51">51</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-52" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-52">52</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-53" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-53">53</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-54" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-54">54</label><br>
-              </li>
-              <li class="asiento-item"></li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-55" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-55">55</label><br>
-              </li>
-              <li class="asiento-item">
-                <input type="checkbox" class="btn-check" id="asiento-56" autocomplete="off">
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-56">56</label><br>
-              </li>
+          <?php  
+                $i=$i+1;
+                $j=$j+1;
+                }
+               } ?>
+             
             </ul>
           </div>
+         
         </div>
       </div>
       <div class="d-flex flex-column" style="flex: none; width: 400px; gap: 2rem;">
@@ -298,17 +103,19 @@ print_r($row)
           </div>
           <div class="card-body px-4 py-4">
             <div class="mb-2 d-flex justify-content-end">
-              <span class="badge text-bg-light border">Salida: miércoles, abr. 10</span>
+              <span class="badge text-bg-light border">Salida: <?php echo fechaCastellano(date_format(date_create($row["FECHA_VIA"]), "d-m-Y")); ?></span>
             </div>
             <div id="content">
               <ul class="timeline" style="padding-left: 1rem;">
-                <li class="event" data-date="06:30 pm">
-                  <h3>Lima</h3>
-                  <p class="mb-0">Javier Prado</p>
+                <li class="event" data-date="<?php echo date_format(date_create($row["HORA_VIA"]),"g:i A");?>">
+                  <h3><?= $row["Origen"] ?></h3>
                 </li>
-                <li class="event" data-date="09:30 am">
-                  <h3>Tumbes</h3>
-                  <p class="mb-0">Tumbes</p>
+                <?php
+                    $time = strtotime(date_format(date_create($row["HORA_VIA"]),"H:i"));
+                    $endTime = date("H:i A", strtotime('+'.((int)explode("h", $row["DURACION"])[0]) * 60 + (int)explode("min", explode("h ", $row["DURACION"])[1])[0].' minutes', $time));
+                  ?>
+                <li class="event" data-date="<?php echo $endTime?>">
+                  <h3><?= $row["Destino"] ?></h3>
                 </li>
               </ul>
             </div>
@@ -319,20 +126,13 @@ print_r($row)
             <p class="mb-0 fw-semibold">Asientos elegidos</p>
           </div>
           <div class="card-body px-4 py-4">
-            <ul class="list-group mb-3">
-              <li class="list-group-item d-flex justify-content-between">
-                <span>Asiento 15</span>
-                <span>S/. 80.00</span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between">
-                <span>Asiento 16</span>
-                <span>S/. 80.00</span>
-              </li>
+            <ul id="asientosElegidos" class="list-group mb-3">
+              
             </ul>
             <ul class="list-group">
-              <li class="list-group-item d-flex justify-content-between fw-medium">
+              <li id="totalAsientos" class="list-group-item d-flex justify-content-between fw-medium">
                 <span>Total</span>
-                <span>S/. 160.00</span>
+                <span>S/. 0.00</span>
               </li>
             </ul>
           </div>
@@ -344,6 +144,7 @@ print_r($row)
     </div>
   </main>
 
+
   <!-- Pie de Página -->
   <footer class="bg-info text-white text-center py-4">
     <div class="container">
@@ -353,8 +154,43 @@ print_r($row)
     </div>
   </footer>
 
+
   <!-- Script de Bootstrap -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function handleClick(precio_const, asiento){
+
+      if (document.getElementById("asiento-"+asiento).checked){
+        
+        addTask(precio_const, asiento);
+
+      }else{
+        deleteTask(precio_const,asiento);
+      }
+    }
+
+    let addTask = (precio_const, asiento) =>{
+      asientosElegidos.innerHTML +=`<li id=`+asiento+` class="list-group-item d-flex justify-content-between">
+                <span>`+asiento+`</span>
+                <span>S/.`+precio_const+`</span>
+              </li>`;
+      updateTask(precio_const);
+    };
+
+    let deleteTask = (precio_const,id) =>{
+      let taskToDelete = document.getElementById(id);
+      asientosElegidos.removeChild(taskToDelete);
+      updateTask(precio_const);
+    };
+
+    let updateTask = (precio_base = 1) =>{
+      let elementos = asientosElegidos.querySelectorAll('li').length;
+      total= elementos*precio_base;
+      totalAsientos.innerHTML= `<span>Total</span>
+                <span>S/. `+total+` </span>`;
+    };
+  </script>
 </body>
+
 
 </html>
