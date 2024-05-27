@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
   <div class="container">
     <a class="navbar-brand" href="index.php">
-      <img src="./images/BlueBus_logo.png" alt="BlueBus Logo" class="logo">
+        <img src="image/BlueBus_logo.png" alt="BlueBus Logo" class="logo mb-4" height="35" width="auto">
     </a>
     <!-- Botón de hamburguesa para dispositivos móviles -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
