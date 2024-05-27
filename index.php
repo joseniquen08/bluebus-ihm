@@ -135,7 +135,7 @@ $mensaje_error = '';
             </div>
           </div>
           <div class="col-md-1">
-          <button type="submit" class="btn btn-primary" formaction="selecAsiento.php?cod_via='VIA0001'">Buscar</button>
+          <button type="submit" class="btn btn-primary" formaction="seleccionar_asiento.php?cod_via='VIA0001'">Buscar</button>
           </div>
         </div>
       </form>
