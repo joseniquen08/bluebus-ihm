@@ -43,24 +43,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body class="d-flex justify-content-center align-items-center vh-100 bg-color-blue-oscuro">
   <div class="bg-white rounded-5 text-secondary d-flex justify-content-between" style="width: 60rem">
     <div class="left-box shadow">
-        <img src="image/pexels-mauricio-espinoza-gavilano-582278929-17029844.jpg" alt="Machu Picchu" style="border-top-left-radius: 2rem; border-bottom-left-radius: 2rem;">
+        <img src="images/pexels-mauricio-espinoza-gavilano-582278929-17029844.jpg" alt="Machu Picchu" style="border-top-left-radius: 2rem; border-bottom-left-radius: 2rem;">
     </div>
     <div class="right-box">
       <div class="p-5 text-secondary shadow" style="width: 25rem; border-top-right-radius: 2rem; border-bottom-right-radius: 2rem;">
         <div class="d-flex justify-content-center">
-          <img src="image/login-icon.svg" alt="login-icon" style="height: 7rem" />
+          <img src="images/login-icon.svg" alt="login-icon" style="height: 7rem" />
         </div>
         <div class="text-center fs-1 fw-bold">Login</div>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST"> <!-- Aquí se especifica la acción y método del formulario -->
           <div class="input-group mt-4">
             <div class="input-group-text bg-color-blue-oscuro">
-              <img src="image/username-icon.svg" alt="username-icon" style="height: 1rem" />
+              <img src="images/username-icon.svg" alt="username-icon" style="height: 1rem" />
             </div>
             <input name="email" class="form-control bg-light" type="text" placeholder="Correo electrónico" />
           </div>
           <div class="input-group mt-1">
             <div class="input-group-text bg-color-blue-oscuro">
-              <img src="image/password-icon.svg" alt="password-icon" style="height: 1rem" />
+              <img src="images/password-icon.svg" alt="password-icon" style="height: 1rem" />
             </div>
             <input name="password" class="form-control bg-light" type="password" placeholder="Contraseña" />
           </div>

@@ -26,7 +26,7 @@ $mensaje_error = '';
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
       <div class="container">
         <a class="navbar-brand" href="index.php">
-            <img src="image/BlueBus_logo.png" alt="BlueBus Logo" class="logo mb-4" height="35" width="auto">
+            <img src="images/BlueBus_logo.png" alt="BlueBus Logo" class="logo mb-4" height="35" width="auto">
         </a>
         <!-- Botón de hamburguesa para dispositivos móviles -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,21 +56,21 @@ $mensaje_error = '';
   <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="image/pexels-mauricio-espinoza-gavilano-582278929-17029842.jpg" class="d-block w-100" alt="...">
+            <img src="images/pexels-mauricio-espinoza-gavilano-582278929-17029842.jpg" class="d-block w-100" alt="...">
           <div class="carousel-caption d-none d-md-block">
             <h5>Lima</h5>
             <p>Disfruta de nuestras excursiones a las mejores playas del país.</p>
           </div>
         </div>
         <div class="carousel-item">
-            <img src="image/pexels-sbenavides-17043614.jpg" class="d-block w-100" alt="...">
+            <img src="images/pexels-sbenavides-17043614.jpg" class="d-block w-100" alt="...">
           <div class="carousel-caption d-none d-md-block">
             <h5>Arequipa</h5>
             <p>Descubre la belleza natural de nuestro país con nuestros tours ecológicos.</p>
           </div>
         </div>
         <div class="carousel-item">
-            <img src="image/pexels-cristianloayza-16198315.jpg" class="d-block w-100" alt="...">
+            <img src="images/pexels-cristianloayza-16198315.jpg" class="d-block w-100" alt="...">
           <div class="carousel-caption d-none d-md-block">
             <h5>Trujillo</h5>
             <p>Descubre la belleza natural de nuestro país con nuestros tours ecológicos.</p>
@@ -149,7 +149,7 @@ $mensaje_error = '';
             <div class="row">
               <div class="col-lg-4">
                 <div class="card mb-4">
-                    <img src="image/ballenas-tumbes-turismo.jpg" class="card-img-top" alt="...">
+                    <img src="images/ballenas-tumbes-turismo.jpg" class="card-img-top" alt="...">
                   <div class="card-body">
                     <h5 class="card-title">Lima - Tumbes</h5>
                     <p class="card-text">Explora los mejores destinos costeros con nosotros.</p>
@@ -160,7 +160,7 @@ $mensaje_error = '';
               <!-- Agregar más tarjetas aquí -->
               <div class="col-lg-4">
                 <div class="card mb-4">
-                    <img src="image/pexels-sbenavides-17043614.jpg" class="card-img-top" alt="...">
+                    <img src="images/pexels-sbenavides-17043614.jpg" class="card-img-top" alt="...">
                   <div class="card-body">
                     <h5 class="card-title">Lima - Aqrequipa</h5>
                     <p class="card-text">Descripción corta del destino.</p>
@@ -170,7 +170,7 @@ $mensaje_error = '';
               </div>
               <div class="col-lg-4">
                 <div class="card mb-4">
-                    <img src="image/pexels-mauricio-espinoza-gavilano-582278929-17029844.jpg" class="card-img-top" alt="...">
+                    <img src="images/pexels-mauricio-espinoza-gavilano-582278929-17029844.jpg" class="card-img-top" alt="...">
                   <div class="card-body">
                     <h5 class="card-title">Arequipa - Lima</h5>
                     <p class="card-text">Descripción corta del destino.</p>
