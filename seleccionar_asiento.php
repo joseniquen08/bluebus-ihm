@@ -1,7 +1,7 @@
 <?php
 require_once './Conexion.php';
 
-$cod_via = $_REQUEST["COD_VIA"];
+$cod_via = isset($_REQUEST["COD_VIA"]) ? $_REQUEST["COD_VIA"] : "VIA001";
 
 $cn = new Conexion();
 $sql = "SELECT v.HORA_VIA, v.FECHA_VIA, v.DURACION, d.NOM_DESTINO AS Destino, dd.NOM_DESTINO AS Origen FROM viaje AS v JOIN destino AS d ON d.COD_DESTINO = v.DESTINO JOIN destino AS dd ON dd.COD_DESTINO = v.ORIGEN WHERE COD_VIA = '$cod_via'";
@@ -30,7 +30,7 @@ print_r($row)
 </head>
 
 <body>
-  <?php require_once "components/navbar.php"; ?>
+<?php require_once "components/navbar.php"; ?>
 
   <main class="py-4 d-flex flex-column align-items-start mx-auto" style="max-width: 64rem;">
     <div class="w-100 text-center mb-4">
@@ -298,17 +298,17 @@ print_r($row)
           </div>
           <div class="card-body px-4 py-4">
             <div class="mb-2 d-flex justify-content-end">
-              <span class="badge text-bg-light border">Salida: miércoles, abr. 10</span>
+              <span class="badge text-bg-light border">Salida: sabado, abr. 0</span>
             </div>
             <div id="content">
               <ul class="timeline" style="padding-left: 1rem;">
-                <li class="event" data-date="06:30 pm">
+                <li class="event" data-date="08:00 pm">
+                  <h3>Arequipa</h3>
+                  <p class="mb-0">Terrapuerto</p>
+                </li>
+                <li class="event" data-date="12:30 am">
                   <h3>Lima</h3>
                   <p class="mb-0">Javier Prado</p>
-                </li>
-                <li class="event" data-date="09:30 am">
-                  <h3>Tumbes</h3>
-                  <p class="mb-0">Tumbes</p>
                 </li>
               </ul>
             </div>
