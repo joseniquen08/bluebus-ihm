@@ -177,9 +177,23 @@ CREATE PROCEDURE RegistrarUsuario (
     IN contraseña VARCHAR(25)
 )
 BEGIN
+    DECLARE ultimo_codigo CHAR(6);
     DECLARE nuevo_codigo CHAR(6);
-    SET nuevo_codigo = CONCAT('US', LPAD(FLOOR(RAND() * 9999) + 1, 4, '0'));
-    INSERT INTO USUARIO (COD_USER, NOMBRES, APELLIDOS, CORREO, PASSWORD) VALUES (nuevo_codigo, nombres, apellidos, correo, contraseña);
+    DECLARE numero_codigo INT;
+    -- Obtener el último código de usuario
+    SELECT COD_USER INTO ultimo_codigo
+    FROM USUARIO
+    ORDER BY COD_USER DESC
+    LIMIT 1;
+    -- Extraer la parte numérica del código y convertirla a un número
+    SET numero_codigo = CAST(SUBSTRING(ultimo_codigo, 3) AS UNSIGNED);
+    -- Incrementar el número
+    SET numero_codigo = numero_codigo + 1;
+    -- Formatear el nuevo código con el prefijo 'US' y el número ajustado a 4 dígitos con ceros a la izquierda
+    SET nuevo_codigo = CONCAT('US', LPAD(numero_codigo, 4, '0'));
+    -- Insertar el nuevo usuario con el nuevo código
+    INSERT INTO USUARIO (COD_USER, NOMBRES, APELLIDOS, CORREO, PASSWORD)
+    VALUES (nuevo_codigo, nombres, apellidos, correo, contraseña);
 END$$
 DELIMITER ;
 
@@ -438,5 +452,15 @@ CREATE PROCEDURE BuscarVentaPorID (
 )
 BEGIN
     SELECT * FROM VENTA WHERE COD_VENTA = codigo_venta;
+END$$
+DELIMITER ;
+
+-- 27 - Buscar Usuario por correo (TODOS LOS DATOS):
+DELIMITER $$
+CREATE PROCEDURE BuscarUsuarioPorCorreo (
+    IN correo_usuario VARCHAR(35)
+)
+BEGIN
+    SELECT * FROM USUARIO WHERE CORREO = correo_usuario;
 END$$
 DELIMITER ;

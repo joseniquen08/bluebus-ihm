@@ -1,78 +1,15 @@
-/* Estilos personalizados */
+/* Estilos personalizados para el resto de la página */
 body {
-  background-color: #e8f5ff;
-  /* Fondo celeste */
-  color: #004080;
-  /* Texto azul oscuro */
-}
-
-.navbar {
-  background-color: #052659;
-  /* Azul oscuro para la barra de navegación */
-}
-
-.nav-link {
-  color: #ffffff;
-  /* Texto blanco para los enlaces de navegación */
+  background-color: #e8f5ff; /* Fondo celeste */
+  color: #004080; /* Texto azul oscuro */
 }
 
 .carousel-caption {
-  background-color: rgba(0, 64, 128, 0.7);
-  /* Fondo semi-transparente azul oscuro para las descripciones en el slider */
+  background-color: rgba(0, 64, 128, 0.7); /* Fondo semi-transparente azul oscuro para las descripciones en el slider */
 }
 
 .carousel-item img {
-  height: 400px;
-  /* Aumenta la altura de las imágenes del slider */
-}
-
-.carousel-control-prev,
-.carousel-control-next {
-  top: 50%;
-  /* Posiciona los botones de control en el centro vertical */
-  transform: translateY(-50%);
-  /* Centra verticalmente los botones de control */
-  z-index: 1;
-  /* Asegura que estén encima del contenido del slider */
-  color: #5483b3;
-  /* Cambia el color de las flechas del slider */
-}
-
-.navbar-brand {
-  margin-right: auto;
-  /* Centrar el logo en la esquina izquierda */
-}
-
-/* CSS personalizado para ajustar el tamaño del logo */
-.navbar-brand img {
-  width: 50px;
-  /* Tamaño del logo */
-  height: 50px;
-}
-
-@media (max-width: 991.98px) {
-  /* Ajustar el tamaño del logo para dispositivos móviles */
-  .navbar-brand img {
-    max-width: 120px;
-    /* Tamaño máximo del logo en dispositivos móviles */
-  }
-}
-
-.navbar.sticky-top {
-  animation: fadeInDown 0.5s;
-  /* Animación para mostrar la barra pegajosa */
-}
-
-@keyframes fadeInDown {
-  0% {
-    opacity: 0;
-    transform: translateY(-100%);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  height: 400px; /* Aumenta la altura de las imágenes del slider */
 }
 
 .asientos-container {

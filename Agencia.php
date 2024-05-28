@@ -89,5 +89,17 @@ class Agencia {
         }
         return $vec;
     }
+
+    //BUSCAR TODOS LOS DATOS DE UN USUARIO POR CORREO
+    public function BuscarUsuarioPorCorreo($usuario_correo) {
+        $cn = new Conexion();
+        $sql = "CALL BuscarUsuarioPorCorreo('$usuario_correo')";
+        $res = mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
+        
+        // Obtener una sola fila de resultado
+        $usuario = mysqli_fetch_assoc($res);
+        
+        mysqli_close($cn->conecta());
+        return $usuario;
+    }
 }
-?>

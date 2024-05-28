@@ -1,296 +1,103 @@
+<?php
+// Incluye el archivo Agencia.php que contiene tu función validarLogin
+include_once './Agencia.php';
+include_once './Conexion.php';
+
+// Inicia la sesión
+session_start();
+
+$obj = new Agencia();
+// Define una variable para almacenar el mensaje de error
+$mensaje_error = '';
+
+// Verifica si se han enviado datos del formulario
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Obtén los valores del formulario y sanitízalos
+    $usuario_correo = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+    $contraseña = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+
+    // Validar los inputs
+    if (!filter_var($usuario_correo, FILTER_VALIDATE_EMAIL)) {
+        $mensaje_error = "Correo electrónico no válido.";
+    } elseif (strlen($contraseña) < 8) {
+        $mensaje_error = "La contraseña debe tener al menos 8 caracteres.";
+    } elseif (!preg_match('/[A-Za-z]/', $contraseña) || !preg_match('/[0-9]/', $contraseña)) {
+        $mensaje_error = "La contraseña debe contener letras y números.";
+    } else {
+        // Llama a tu función validarLogin
+        if ($obj->validarLogin($usuario_correo, $contraseña)) {
+            // Si las credenciales son válidas, guarda la información del usuario en la sesión y redirige al usuario a la página de inicio
+            $_SESSION['user_email'] = $usuario_correo;
+            header("Location: inicio.php");
+            exit();
+        } else {
+            // Si las credenciales no son válidas, muestra un mensaje de error
+            $mensaje_error = "Credenciales incorrectas. Intente de nuevo.";
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inicio - Empresa de Transporte Terrestre</title>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BlueBus - Login</title>
   <!-- Enlace a la hoja de estilos de Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Enlace a los iconos de Bootstrap -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  <style>
-    /* Estilos personalizados */
-    /* CSS personalizado para centrar el logo en la esquina y hacerlo responsivo */
-    .navbar-brand {
-      margin-right: auto;
-      /* Centrar el logo en la esquina izquierda */
-    }
-
-    /* CSS personalizado para ajustar el tamaño del logo */
-    .navbar-brand img {
-      width: 50px;
-      /* Tamaño del logo */
-      height: 50px;
-    }
-
-    @media (max-width: 991.98px) {
-
-      /* Ajustar el tamaño del logo para dispositivos móviles */
-      .navbar-brand img {
-        max-width: 120px;
-        /* Tamaño máximo del logo en dispositivos móviles */
-      }
-    }
-
-    body {
-      background-color: #c1e8ff;
-      /* Fondo celeste */
-      color: #021024;
-      /* Texto azul oscuro */
-    }
-
-    .navbar {
-      background-color: #052659;
-      /* Azul oscuro para la barra de navegación */
-    }
-
-    .nav-link {
-      color: #fff;
-      /* Texto celeste para los enlaces de navegación */
-    }
-
-    .carousel-caption {
-      background-color: rgba(5, 38, 89, 0.7);
-      /* Fondo semi-transparente azul oscuro para las descripciones en el slider */
-    }
-
-    .card {
-      background-color: #7da0ca;
-      /* Fondo celeste para las tarjetas de destinos */
-      border: none;
-      /* Sin borde */
-    }
-
-    .card:hover {
-      transform: scale(1.05);
-      /* Efecto de escala al hacer hover */
-      z-index: 1;
-      /* Se eleva al hacer hover */
-    }
-
-    .carousel-item img {
-      height: 400px;
-      /* Aumenta la altura de las imágenes del slider */
-    }
-
-    .carousel-control-prev,
-    .carousel-control-next {
-      top: 50%;
-      /* Posiciona los botones de control en el centro vertical */
-      transform: translateY(-50%);
-      /* Centra verticalmente los botones de control */
-      z-index: 1;
-      /* Asegura que estén encima del contenido del slider */
-      color: #5483b3;
-      /* Cambia el color de las flechas del slider */
-    }
-
-    .navbar.sticky-top {
-      animation: fadeInDown 0.5s;
-      /* Animación para mostrar la barra pegajosa */
-    }
-
-    @keyframes fadeInDown {
-      0% {
-        opacity: 0;
-        transform: translateY(-100%);
-      }
-
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .bg-light {
-      background-color: #c1e8ff;
-      /* Fondo celeste para la sección adicional */
-    }
-
-    .bg-info {
-      background-color: #052659 !important;
-    }
-
-    .text-info {
-      color: #021024;
-      /* Texto azul oscuro para el pie de página */
-    }
-  </style>
+  <link href="css/style-login.css" rel="stylesheet" type="text/css"/>
 </head>
 
-<body>
-
-  <!-- Barra de Navegación -->
-  <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-    <div class="container">
-      <a class="navbar-brand" href="index.php">
-        <img src="./images/BlueBus_logo.png" alt="BlueBus Logo" class="logo mb-4">
-      </a>
-      <!-- Botón de hamburguesa para dispositivos móviles -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <!-- Elementos de navegación -->
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="index.php"><i class="bi bi-house-door"></i> Inicio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#"><i class="bi bi-info-circle"></i> Nosotros</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#"><i class="bi bi-people"></i> Servicios</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#"><i class="bi bi-envelope"></i> Contacto</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-
-  <!-- Slider de Viajes -->
-  <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="https://via.placeholder.com/1200x400" class="d-block w-100" alt="...">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Viaje a la playa</h5>
-          <p>Disfruta de nuestras excursiones a las mejores playas del país.</p>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <img src="https://via.placeholder.com/1200x400" class="d-block w-100" alt="...">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Explora la naturaleza</h5>
-          <p>Descubre la belleza natural de nuestro país con nuestros tours ecológicos.</p>
-        </div>
-      </div>
-      <!-- Agrega más elementos carousel-item según sea necesario -->
-    </div>
-    <!-- Flechas de control -->
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
-
-  <br></br>
-  <br></br>
-
-  <!-- Contenedores de Viajes -->
-  <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-    <div class="carousel-inner">
-      <div class="carousel-item active"> <!-- Añadir la clase 'active' al primer item -->
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-4">
-              <div class="card mb-4">
-                <img src="./images/ballenas-tumbes-turismo.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Lima - Tumbes</h5>
-                  <p class="card-text">Explora los mejores destinos costeros con nosotros.</p>
-                  <a href="seleccionar_asiento.php?COD_VIA=VIA008" class="btn btn-primary"><i class="bi bi-eye"></i> Ver Detalles</a>
-                </div>
-              </div>
-            </div>
-            <!-- Agregar más tarjetas aquí -->
-            <div class="col-lg-4">
-              <div class="card mb-4">
-                <img src="https://via.placeholder.com/300" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Destino 2</h5>
-                  <p class="card-text">Descripción corta del destino.</p>
-                  <a href="#" class="btn btn-primary"><i class="bi bi-eye"></i> Ver Detalles</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4">
-              <div class="card mb-4">
-                <img src="https://via.placeholder.com/300" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Destino 3</h5>
-                  <p class="card-text">Descripción corta del destino.</p>
-                  <a href="#" class="btn btn-primary"><i class="bi bi-eye"></i> Ver Detalles</a>
-                </div>
-              </div>
-            </div>
+<body class="d-flex justify-content-center align-items-center vh-100 bg-color-blue-oscuro">
+  <div class="container">
+    <div class="row justify-content-center align-items-center">
+      <div class="col-12 col-md-10 col-lg-8">
+        <div class="card flex-md-row">
+          <div class="card-img-left d-none d-md-block">
+            <img src="images/pexels-mauricio-espinoza-gavilano-582278929-17029844.jpg" alt="Machu Picchu" class="img-fluid">
           </div>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <div class="container">
-          <div class="row">
-            <!-- Aquí comienza un nuevo carousel-item -->
-            <div class="col-lg-4">
-              <div class="card mb-4">
-                <img src="https://via.placeholder.com/300" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Destino 4</h5>
-                  <p class="card-text">Descripción corta del destino.</p>
-                  <a href="#" class="btn btn-primary"><i class="bi bi-eye"></i> Ver Detalles</a>
-                </div>
-              </div>
+          <div class="card-body">
+            <div class="d-flex justify-content-center mb-4">
+              <img src="images/login-icon.svg" alt="login-icon" style="height: 7rem" />
             </div>
-            <div class="col-lg-4">
-              <div class="card mb-4">
-                <img src="https://via.placeholder.com/300" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Destino 5</h5>
-                  <p class="card-text">Descripción corta del destino.</p>
-                  <a href="#" class="btn btn-primary"><i class="bi bi-eye"></i> Ver Detalles</a>
+            <h1 class="text-center fs-1 fw-bold">Login</h1>
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+              <div class="input-group mt-4">
+                <div class="input-group-text bg-color-blue-oscuro">
+                  <img src="images/username-icon.svg" alt="username-icon" style="height: 1rem" />
                 </div>
+                <input name="email" class="form-control bg-light" type="email" placeholder="Correo electrónico" required />
               </div>
+              <div class="input-group mt-3">
+                <div class="input-group-text bg-color-blue-oscuro">
+                  <img src="images/password-icon.svg" alt="password-icon" style="height: 1rem" />
+                </div>
+                <input name="password" class="form-control bg-light" type="password" placeholder="Contraseña" required pattern="(?=.*\d)(?=.*[a-zA-Z]).{8,}" title="La contraseña debe tener al menos 8 caracteres, e incluir letras y números." />
+              </div>
+              <button type="submit" class="btn btn-blue-oscuro text-white w-100 mt-4 fw-semibold shadow-sm">Iniciar sesión</button>
+            </form>
+            <?php if(!empty($mensaje_error)) { ?>
+                <div class="alert alert-danger mt-3" role="alert">
+                    <?php echo $mensaje_error; ?>
+                </div>
+            <?php } ?>
+            <div class="d-flex gap-1 justify-content-center mt-3">
+              <div>¿No estás registrado?</div>
+              <a href="registro.php" class="text-decoration-none text-blue-oscuro fw-semibold">Registrate</a>
             </div>
-            <div class="col-lg-4">
-              <div class="card mb-4">
-                <img src="https://via.placeholder.com/300" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Destino 6</h5>
-                  <p class="card-text">Descripción corta del destino.</p>
-                  <a href="#" class="btn btn-primary"><i class="bi bi-eye"></i> Ver Detalles</a>
-                </div>
-              </div>
+            <div class="d-flex justify-content-around mt-3">
+              <a href="#" class="text-decoration-none text-blue-oscuro">¿Olvidaste tu contraseña?</a>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="sr-only"></span>
-    </a>
-    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="sr-only"></span>
-    </a>
   </div>
-
-  <!-- Sección adicional -->
-  <section class="bg-light py-5">
-    <div class="container">
-      <h2>Otra Sección Relacionada con Viajes</h2>
-      <p>Agrega aquí información adicional relacionada con los servicios de transporte terrestre que ofrece la empresa. Puede ser testimonios de clientes, promociones especiales, consejos para viajar, etc.</p>
-    </div>
-  </section>
-
-  <!-- Pie de Página -->
-  <footer class="bg-info text-white text-center py-4">
-    <div class="container">
-      <p class="mb-0"><i class="bi bi-telephone"></i> Teléfono: +123 456 789 | <i class="bi bi-geo-alt"></i> Dirección: Av. Principal 123, Ciudad Principal, País</p>
-      <p class="mb-0"><i class="bi bi-envelope"></i> Email: info@empresa.com</p>
-    </div>
-  </footer>
-
-  <!-- Script de Bootstrap -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

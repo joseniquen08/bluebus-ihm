@@ -1,15 +1,12 @@
 <?php
 require_once './Conexion.php';
 
-
-$cod_via = $_REQUEST["COD_VIA"];
-
+$cod_via = isset($_REQUEST["COD_VIA"]) ? $_REQUEST["COD_VIA"] : "VIA001";
 
 $cn = new Conexion();
 $sql = "SELECT b.NUM_ASIENTOS AS Asientos, v.HORA_VIA, v.FECHA_VIA, v.DURACION, d.NOM_DESTINO AS Destino, dd.NOM_DESTINO AS Origen, v.PRECIO_BASE AS PRECIO FROM viaje AS v JOIN destino AS d ON d.COD_DESTINO = v.DESTINO JOIN destino AS dd ON dd.COD_DESTINO = v.ORIGEN JOIN bus AS b ON b.PLACA = v.BUS WHERE COD_VIA = '$cod_via'";
 $res = mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
 $row = mysqli_fetch_assoc($res);
-
 
 function fechaCastellano ($fecha) {
   $fecha = substr($fecha, 0, 10);
@@ -27,12 +24,8 @@ function fechaCastellano ($fecha) {
 }
 ?>
 
-
-
-
 <!DOCTYPE html>
 <html lang="es">
-
 
 <head>
   <meta charset="UTF-8">
@@ -44,16 +37,14 @@ function fechaCastellano ($fecha) {
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="./css/global.css">
   <link rel="stylesheet" href="./css/seleccionar_asiento.css">
+  <link href="css/navbar.css" rel="stylesheet" type="text/css"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 </head>
 
-
 <body>
-  <?php require_once "components/navbar.php"; ?>
-
-
+<?php require_once "components/navbar.php"; ?>
   <main class="py-4 d-flex flex-column align-items-start mx-auto" style="max-width: 64rem;">
     <div class="w-100 text-center mb-4">
       <p class="fs-2 fw-bolder">Elección de asientos</p>
@@ -146,11 +137,10 @@ function fechaCastellano ($fecha) {
 
 
   <!-- Pie de Página -->
-  <footer class="bg-info text-white text-center py-4">
+  <footer id="contacto" class="bg-info text-white text-center py-4">
     <div class="container">
-      <p class="mb-0"><i class="bi bi-telephone"></i> Teléfono: +123 456 789 | <i class="bi bi-geo-alt"></i> Dirección:
-        Av. Principal 123, Ciudad Principal, País</p>
-      <p class="mb-0"><i class="bi bi-envelope"></i> Email: info@empresa.com</p>
+      <p class="mb-0"><i class="bi bi-telephone"></i> Teléfono: +51 992 568 742 | <i class="bi bi-geo-alt"></i> Dirección: Av. Javier Prado Este 123, San Isidro, Lima, Perú</p>
+      <p class="mb-0"><i class="bi bi-envelope"></i> Email: info@bluebus.com</p>
     </div>
   </footer>
 
@@ -191,6 +181,5 @@ function fechaCastellano ($fecha) {
     };
   </script>
 </body>
-
 
 </html>
