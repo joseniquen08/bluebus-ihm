@@ -84,9 +84,8 @@ $mensaje_error = '';
       <form action="search.php" method="GET" class="search-form">
         <div class="row justify-content-center">
           <div class="col-md-4 mb-3">
-            <div class="input-group">
-              <label class="input-group-text" for="inputGroupSelect01">Origen</label>
-              <select class="form-select" id="inputGroupSelect01" name="origen" required>
+            <div class="form-floating">
+              <select class="form-select" id="floatingSelectOrigen" name="origen" required>
                 <option selected disabled>Elije...</option>
                 <option value="LIMA">LIMA</option>
                 <option value="ICA">ICA</option>
@@ -97,12 +96,12 @@ $mensaje_error = '';
                 <option value="HUARMEY">HUARMEY</option>
                 <option value="CHICLAYO">CHICLAYO</option>
               </select>
+              <label for="floatingSelectOrigen">Origen</label>
             </div>
           </div>
           <div class="col-md-4 mb-3">
-            <div class="input-group">
-              <label class="input-group-text" for="inputGroupSelect02">Destino</label>
-              <select class="form-select" id="inputGroupSelect02" name="destino" required>
+            <div class="form-floating">
+              <select class="form-select" id="floatingSelectDestino" name="destino" required>
                 <option selected disabled>Elije...</option>
                 <option value="LIMA">LIMA</option>
                 <option value="ICA">ICA</option>
@@ -113,20 +112,22 @@ $mensaje_error = '';
                 <option value="HUARMEY">HUARMEY</option>
                 <option value="CHICLAYO">CHICLAYO</option>
               </select>
+              <label for="floatingSelectDestino">Destino</label>
             </div>
           </div>
           <div class="col-md-3 mb-3">
-            <div class="input-group">
-              <label class="input-group-text" for="inputGroupSelect03">Fecha de Salida</label>
-              <input type="date" class="form-control" id="inputGroupSelect03" name="fecha_salida" required>
+            <div class="form-floating">
+              <input type="date" class="form-control" id="floatingInputFecha" name="fecha_salida" required>
+              <label for="floatingInputFecha">Fecha de Salida</label>
             </div>
           </div>
-          <div class="col-md-1 mb-3">
+          <div class="col-md-1 mb-3 d-flex align-items-end">
             <button type="submit" class="btn btn-primary w-100" formaction="seleccionar_asiento.php?cod_via='VIA0001'">Buscar</button>
           </div>
         </div>
       </form>
     </div>
+
 
     <!-- Contenedores de Viajes -->
     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">

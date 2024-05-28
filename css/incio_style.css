@@ -83,4 +83,11 @@ border-radius: 20px;
 .custom-slider-img {
 height: 600px; /* Ajusta la altura según tus necesidades */
 object-fit: cover; /* Asegura que la imagen se ajuste correctamente */
+}
+
+/* Asegura que el botón tenga un margen superior adecuado en pantallas pequeñas */
+@media (max-width: 576px) {
+.d-flex.align-items-end {
+    margin-top: 1rem;
+}
 }  

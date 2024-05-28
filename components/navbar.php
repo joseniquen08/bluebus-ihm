@@ -23,6 +23,9 @@
         <li class="nav-item">
           <a class="nav-link" href="#contacto"><i class="bi bi-envelope"></i> Contacto</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link"><i class="bi bi-person"></i></i>Hola</a>
+        </li>
       </ul>
     </div>
   </div>
