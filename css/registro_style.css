@@ -1,0 +1,26 @@
+/* Estilos personalizados para el resto de la página */
+body {
+overflow-y: scroll;
+scrollbar-width: none; /* Para Firefox */
+}
+
+body::-webkit-scrollbar {
+display: none; /* Oculta la barra de desplazamiento vertical en Chrome, Safari y Edge */
+}
+
+body {
+background-color: #c1e8ff; /* Fondo celeste */
+color: #021024; /* Texto azul oscuro */
+}
+
+.bg-light {
+background-color: #c1e8ff; /* Fondo celeste para la sección adicional */
+}
+
+.bg-info {
+background-color: #052659 !important;
+}
+
+.text-info {
+color: #021024; /* Texto azul oscuro para el pie de página */
+}
