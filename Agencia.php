@@ -87,10 +87,11 @@ class Agencia {
         while ($f = mysqli_fetch_array($res)) {
             $vec[] = $f;
         }
+        mysqli_close($cn->conecta());
         return $vec;
     }
 
-    //BUSCAR TODOS LOS DATOS DE UN USUARIO POR CORREO
+    // BUSCAR TODOS LOS DATOS DE UN USUARIO POR CORREO
     public function BuscarUsuarioPorCorreo($usuario_correo) {
         $cn = new Conexion();
         $sql = "CALL BuscarUsuarioPorCorreo('$usuario_correo')";
@@ -101,5 +102,21 @@ class Agencia {
         
         mysqli_close($cn->conecta());
         return $usuario;
+    }
+
+    // LISTADO DE DESTINOS
+    public function ListarDestinos() {
+        $cn = new Conexion();
+        $sql = "CALL ListarDestinos()";
+        $res = mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
+        
+        // Obtener todas las filas de resultado
+        $destinos = array();
+        while ($fila = mysqli_fetch_assoc($res)) {
+            $destinos[] = $fila;
+        }
+        
+        mysqli_close($cn->conecta());
+        return $destinos;
     }
 }
