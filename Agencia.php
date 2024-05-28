@@ -91,6 +91,24 @@ class Agencia {
         return $vec;
     }
 
+    // NOMBRE DESTINO
+    function nombreDestino($codDestino) {
+        $cn = new Conexion();
+        $sql = "SELECT NOM_DESTINO FROM DESTINO WHERE COD_DESTINO = '$codDestino'";
+        $res = mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
+        $row = mysqli_fetch_assoc($res); // Obtener la fila de resultados como un array asociativo
+        mysqli_close($cn->conecta());
+        
+        // Verificar si se encontró un resultado
+        if ($row) {
+            // Devolver el nombre del destino encontrado
+            return $row['NOM_DESTINO'];
+        } else {
+            // En caso de no encontrar el destino, devolver un valor por defecto o lanzar una excepción según tu lógica de aplicación
+            return "Destino no encontrado";
+        }
+    }
+
     // BUSCAR TODOS LOS DATOS DE UN USUARIO POR CORREO
     public function BuscarUsuarioPorCorreo($usuario_correo) {
         $cn = new Conexion();

@@ -81,8 +81,6 @@ $listaDestinos = $obj->ListarDestinos();
       </button>
     </div>
 
-    <br><br>
-
     <!-- Contenido Principal -->
     <!-- Formulario búsqueda rápida -->
     <div class="container py-5">
