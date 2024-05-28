@@ -2,9 +2,11 @@
 
 include_once './Conexion.php';
 
-class Agencia {
+class Agencia
+{
     // LOGIN DE USUARIO
-    function validarLogin($usuario_correo, $contraseña) {
+    function validarLogin($usuario_correo, $contraseña)
+    {
         $cn = new Conexion();
         $sql = "SELECT VerificarCredenciales('$usuario_correo', '$contraseña') AS resultado";
         $res = mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
@@ -14,14 +16,16 @@ class Agencia {
     }
 
     // REGISTRO DE USUARIO
-    function registrarUsuario($nombres, $apellidos, $correo, $contraseña) {
+    function registrarUsuario($nombres, $apellidos, $correo, $contraseña)
+    {
         $cn = new Conexion();
         $sql = "CALL RegistrarUsuario('$nombres', '$apellidos', '$correo', '$contraseña')";
         mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
     }
 
     // OBTENER DATOS DE USUARIO POR CORREO
-    function obtenerUsuarioPorCorreo($usuario_correo) {
+    function obtenerUsuarioPorCorreo($usuario_correo)
+    {
         $cn = new Conexion();
         $sql = "CALL ObtenerUsuarioPorCorreo('$usuario_correo')";
         $res = mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
@@ -31,7 +35,8 @@ class Agencia {
     }
 
     // COMPRA DE BOLETOS
-    function comprarBoleto($usuario_cod, $viaje_cod, $asiento_id) {
+    function comprarBoleto($usuario_cod, $viaje_cod, $asiento_id)
+    {
         $cn = new Conexion();
         $sql = "CALL ComprarBoleto('$usuario_cod', '$viaje_cod', $asiento_id)";
         $res = mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
@@ -41,7 +46,8 @@ class Agencia {
     }
 
     // ASIENTOS OCUPADOS POR VIAJE
-    function mostrarAsientosOcupados($viaje_cod) {
+    function mostrarAsientosOcupados($viaje_cod)
+    {
         $cn = new Conexion();
         $sql = "CALL MostrarAsientosOcupados('$viaje_cod')";
         $res = mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
@@ -53,7 +59,8 @@ class Agencia {
     }
 
     // ASIENTOS DISPONIBLES POR VIAJE
-    function mostrarAsientosDisponibles($viaje_cod) {
+    function mostrarAsientosDisponibles($viaje_cod)
+    {
         $cn = new Conexion();
         $sql = "CALL MostrarAsientosDisponibles('$viaje_cod')";
         $res = mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
@@ -65,21 +72,24 @@ class Agencia {
     }
 
     // ACTUALIZAR DATOS DE USUARIO
-    function actualizarUsuario($codigo, $nombres, $apellidos, $correo, $contraseña) {
+    function actualizarUsuario($codigo, $nombres, $apellidos, $correo, $contraseña)
+    {
         $cn = new Conexion();
         $sql = "CALL ActualizarUsuario('$codigo', '$nombres', '$apellidos', '$correo', '$contraseña')";
         mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
     }
 
     // CANCELAR RESERVA O COMPRA
-    function cancelarReserva($reserva_id) {
+    function cancelarReserva($reserva_id)
+    {
         $cn = new Conexion();
         $sql = "CALL CancelarReserva($reserva_id)";
         mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
     }
 
     // BÚSQUEDA DE VIAJES POR ORIGEN, DESTINO Y FECHA
-    function buscarViajes($origen_cod, $destino_cod, $fecha_via) {
+    function buscarViajes($origen_cod, $destino_cod, $fecha_via)
+    {
         $cn = new Conexion();
         $sql = "SELECT * FROM VIAJE WHERE ORIGEN = '$origen_cod' AND DESTINO = '$destino_cod' AND FECHA_VIA = '$fecha_via'";
         $res = mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
@@ -92,13 +102,14 @@ class Agencia {
     }
 
     // NOMBRE DESTINO
-    function nombreDestino($codDestino) {
+    function nombreDestino($codDestino)
+    {
         $cn = new Conexion();
         $sql = "SELECT NOM_DESTINO FROM DESTINO WHERE COD_DESTINO = '$codDestino'";
         $res = mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
         $row = mysqli_fetch_assoc($res); // Obtener la fila de resultados como un array asociativo
         mysqli_close($cn->conecta());
-        
+
         // Verificar si se encontró un resultado
         if ($row) {
             // Devolver el nombre del destino encontrado
@@ -110,30 +121,32 @@ class Agencia {
     }
 
     // BUSCAR TODOS LOS DATOS DE UN USUARIO POR CORREO
-    public function BuscarUsuarioPorCorreo($usuario_correo) {
+    public function BuscarUsuarioPorCorreo($usuario_correo)
+    {
         $cn = new Conexion();
         $sql = "CALL BuscarUsuarioPorCorreo('$usuario_correo')";
         $res = mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
-        
+
         // Obtener una sola fila de resultado
         $usuario = mysqli_fetch_assoc($res);
-        
+
         mysqli_close($cn->conecta());
         return $usuario;
     }
 
     // LISTADO DE DESTINOS
-    public function ListarDestinos() {
+    public function ListarDestinos()
+    {
         $cn = new Conexion();
         $sql = "CALL ListarDestinos()";
         $res = mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
-        
+
         // Obtener todas las filas de resultado
         $destinos = array();
         while ($fila = mysqli_fetch_assoc($res)) {
             $destinos[] = $fila;
         }
-        
+
         mysqli_close($cn->conecta());
         return $destinos;
     }
