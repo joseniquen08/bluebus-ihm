@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!-- Barra de Navegación -->
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-dark">
   <div class="container d-flex align-items-center justify-content-between">
@@ -23,8 +27,15 @@
         <li class="nav-item">
           <a class="nav-link" href="#contacto"><i class="bi bi-envelope"></i> Contacto</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link"><i class="bi bi-person"></i></i>Hola</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-person"></i> Hola, <?php echo isset($_SESSION['user_data']['NOMBRES']) ? htmlspecialchars($_SESSION['user_data']['NOMBRES']) : 'Invitado'; ?>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <li>
+              <a class="dropdown-item" href="logout.php"><i class="bi bi-box-arrow-left"></i> Cerrar Sesión</a>
+            </li>
+          </ul>
         </li>
       </ul>
     </div>

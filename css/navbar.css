@@ -26,7 +26,7 @@
 }
 
 .nav-link {
-    color: #fff; /* Texto celeste para los enlaces de navegación */
+    color: #fff; /* Texto blanco para los enlaces de navegación */
 }
 
 .navbar.sticky-top {
@@ -50,4 +50,23 @@
   transform: translateY(-50%); /* Centra verticalmente los botones de control */
   z-index: 1; /* Asegura que estén encima del contenido del slider */
   color: #5483b3 !important; /* Cambia el color de las flechas del slider */
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.75);
+}
+.navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link:focus {
+    color: rgba(255, 255, 255, 1);
+}
+.dropdown-menu {
+    background-color: #052659; /* Matching the navbar color */
+    font-size: 14px; /* Tamaño de fuente más pequeño para dispositivos móviles */
+    padding: 0.5rem 0; /* Padding más ajustado para dispositivos móviles */
+}
+.dropdown-item {
+    color: white;
+}
+.dropdown-item:hover, .dropdown-item:focus {
+    background-color: #5483b3; /* Slightly lighter shade for hover */
+    color: white;
 }

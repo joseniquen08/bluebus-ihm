@@ -440,3 +440,13 @@ BEGIN
     SELECT * FROM VENTA WHERE COD_VENTA = codigo_venta;
 END$$
 DELIMITER ;
+
+-- 27 - Buscar Usuario por correo (TODOS LOS DATOS):
+DELIMITER $$
+CREATE PROCEDURE BuscarUsuarioPorCorreo (
+    IN correo_usuario VARCHAR(35)
+)
+BEGIN
+    SELECT * FROM USUARIO WHERE CORREO = correo_usuario;
+END$$
+DELIMITER ;
