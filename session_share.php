@@ -1,5 +1,5 @@
 <?php
-session_start();
+include_once './Agencia.php';
 
 $obj = new Agencia();
 $usuario_correo = $_SESSION['user_email'];
