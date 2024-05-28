@@ -82,8 +82,8 @@ $mensaje_error = '';
     <div class="container py-5">
       <h1 class="display-3 mb-5 text-center">Encuentra tu destino ideal</h1>
       <form action="search.php" method="GET" class="search-form">
-        <div class="row justify-content-center">
-          <div class="col-md-4 mb-3">
+        <div class="row g-3 justify-content-center">
+          <div class="col-md-3">
             <div class="form-floating">
               <select class="form-select" id="floatingSelectOrigen" name="origen" required>
                 <option selected disabled>Elije...</option>
@@ -99,7 +99,7 @@ $mensaje_error = '';
               <label for="floatingSelectOrigen">Origen</label>
             </div>
           </div>
-          <div class="col-md-4 mb-3">
+          <div class="col-md-3">
             <div class="form-floating">
               <select class="form-select" id="floatingSelectDestino" name="destino" required>
                 <option selected disabled>Elije...</option>
@@ -115,19 +115,18 @@ $mensaje_error = '';
               <label for="floatingSelectDestino">Destino</label>
             </div>
           </div>
-          <div class="col-md-3 mb-3">
+          <div class="col-md-3">
             <div class="form-floating">
               <input type="date" class="form-control" id="floatingInputFecha" name="fecha_salida" required>
               <label for="floatingInputFecha">Fecha de Salida</label>
             </div>
           </div>
-          <div class="col-md-1 mb-3 d-flex align-items-end">
-            <button type="submit" class="btn btn-primary w-100" formaction="seleccionar_asiento.php?cod_via='VIA0001'">Buscar</button>
+          <div class="col-md-2 d-grid">
+            <button type="submit" class="btn btn-primary" formaction="seleccionar_asiento.php?cod_via='VIA0001'">Buscar</button>
           </div>
         </div>
       </form>
     </div>
-
 
     <!-- Contenedores de Viajes -->
     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">

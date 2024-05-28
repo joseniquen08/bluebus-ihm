@@ -87,7 +87,7 @@ object-fit: cover; /* Asegura que la imagen se ajuste correctamente */
 
 /* Asegura que el botón tenga un margen superior adecuado en pantallas pequeñas */
 @media (max-width: 576px) {
-.d-flex.align-items-end {
+.d-grid {
     margin-top: 1rem;
 }
 }  
