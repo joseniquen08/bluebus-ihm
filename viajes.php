@@ -23,7 +23,7 @@ if (isset($_GET['origen'], $_GET['destino'], $_GET['fecha']) && $_GET['origen'] 
             <title>Resultados de Viajes</title>
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-            <link href="css/registro_style.css" rel="stylesheet" type="text/css" />
+            <link href="css/viajes_style.css" rel="stylesheet" type="text/css" />
             <link href="css/navbar.css" rel="stylesheet" type="text/css" />
             <link href="css/resultados.css" rel="stylesheet" type="text/css" />
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -44,31 +44,26 @@ if (isset($_GET['origen'], $_GET['destino'], $_GET['fecha']) && $_GET['origen'] 
                 </div>
                 <div class="row justify-content-center" id="results-container">
                     <?php foreach ($viajes as $viaje) : ?>
-                        <div class="col-md-8 mb-4 viaje-card">
-                            data-price="<?php echo htmlspecialchars($viaje['PRECIO_BASE']); ?>"
-                            data-duration="<?php echo htmlspecialchars($viaje['DURACION']); ?>"
-                            data-earliest="<?php echo htmlspecialchars($viaje['HORA_VIA']); ?>"
+                        <div class="col-md-8 mb-4 viaje-card" data-price="<?php echo htmlspecialchars($viaje['PRECIO_BASE']); ?>" data-duration="<?php echo htmlspecialchars($viaje['DURACION']); ?>" data-earliest="<?php echo htmlspecialchars($viaje['HORA_VIA']); ?>">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row align-items-center">
                                         <div class="col-md-2 text-center">
                                             <h5 class="card-title"><?php echo htmlspecialchars($viaje['HORA_VIA']); ?> am</h5>
-                                            <p class="mb-0"><?php echo htmlspecialchars($viaje['ORIGEN']); ?></p>
-                                        </div>
-                                        <div class="col-md-1 text-center">
-                                            <i class="bi bi-arrow-right"></i>
-                                        </div>
-                                        <div class="col-md-2 text-center">
-                                            <p class="mb-0"><?php echo htmlspecialchars($viaje['DESTINO']); ?></p>
+                                            <p class="mb-0"><?php echo htmlspecialchars($origen_nombre); ?></p>
                                         </div>
                                         <div class="col-md-2 text-center">
                                             <p class="card-text mb-0"><?php echo htmlspecialchars($viaje['DURACION']); ?></p>
-                                        </div>
-                                        <div class="col-md-3 text-center">
-                                            <p class="card-text mb-0"><?php echo htmlspecialchars($viaje['FECHA_VIA']); ?></p>
+                                            <i class="bi bi-arrow-right"></i>
                                         </div>
                                         <div class="col-md-2 text-center">
-                                            <a href="#" class="btn btn-price">S/.<?php echo htmlspecialchars($viaje['PRECIO_BASE']); ?> <i class="bi bi-arrow-right"></i></a>
+                                            <p class="mb-0"><?php echo htmlspecialchars($destino_nombre); ?></p>
+                                        </div>
+                                        <div class="col-md-3 text-center">
+                                            <p class="card-text mb-0">Fecha: <?php echo htmlspecialchars($viaje['FECHA_VIA']); ?></p>
+                                        </div>
+                                        <div class="col-md-2 text-center">
+                                            <a href="seleccionar_asiento.php?COD_VIA=<?php echo $viaje['COD_VIA']; ?>" class="btn btn-price">S/.<?php echo htmlspecialchars($viaje['PRECIO_BASE']); ?> <i class="bi bi-arrow-right"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -109,9 +104,9 @@ if (isset($_GET['origen'], $_GET['destino'], $_GET['fecha']) && $_GET['origen'] 
                                 valB = new Date('1970/01/01 ' + b.getAttribute('data-earliest'));
                                 break;
                             case 'latest':
-                                valA = new Date('1970/01/01 ' + a.getAttribute('data-latest'));
-                                valB = new Date('1970/01/01 ' + b.getAttribute('data-latest'));
-                                break;
+                                valA = new Date('1970/01/01 ' + a.getAttribute('data-earliest'));
+                                valB = new Date('1970/01/01 ' + b.getAttribute('data-earliest'));
+                                return valB - valA; // Reverse order for latest
                         }
 
                         return valA - valB;
