@@ -25,10 +25,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mensaje_error = "La contraseña debe tener al menos 8 caracteres, e incluir letras y números.";
     } else {
         // Llama a la función registrarUsuario
-        $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
         try {
-            $obj->registrarUsuario($nombres, $apellidos, $correo, $password_hash);
+            $obj->registrarUsuario($nombres, $apellidos, $correo, $password);
             $mensaje_exito = "Registro exitoso. Puede iniciar sesión.";
         } catch (Exception $e) {
             $mensaje_error = "Error al registrar el usuario. Intente de nuevo.";
@@ -46,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>BlueBus - Registro</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link href="css/style-register.css" rel="stylesheet" type="text/css"/>
+    <link href="css/estilo-registro.css" rel="stylesheet" type="text/css"/>
 </head>
 <body class="d-flex justify-content-center align-items-center vh-100 bg-color-blue-oscuro">
     <div class="container">
@@ -55,30 +54,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="card">
                     <div class="row g-0">
                         <div class="col-12 col-md-6">
-                            <img src="images/pexels-mauricio-espinoza-gavilano-582278929-17029844.jpg" alt="Machu Picchu" class="img-fluid rounded-start">
+                            <img src="images/ica_laguna.png" alt="Image" class="img-fluid rounded-start">
                         </div>
                         <div class="col-12 col-md-6">
                             <div class="card-body">
-                                <div class="d-flex justify-content-center mb-4">
-                                    <img src="images/register-icon.svg" alt="register-icon" style="height: 7rem" />
-                                </div>
                                 <h1 class="text-center fs-1 fw-bold">Registro</h1>
                                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
                                     <div class="input-group mt-4">
                                         <div class="input-group-text bg-color-blue-oscuro">
-                                            <i class="bi bi-person-fill"></i>
+                                            <i class="bi bi-person"></i>
                                         </div>
                                         <input name="nombres" class="form-control bg-light" type="text" placeholder="Nombres" required />
                                     </div>
                                     <div class="input-group mt-3">
                                         <div class="input-group-text bg-color-blue-oscuro">
-                                            <i class="bi bi-person-fill"></i>
+                                            <i class="bi bi-person"></i>
                                         </div>
                                         <input name="apellidos" class="form-control bg-light" type="text" placeholder="Apellidos" required />
                                     </div>
                                     <div class="input-group mt-3">
                                         <div class="input-group-text bg-color-blue-oscuro">
-                                            <i class="bi bi-envelope"></i>
+                                            <i class="bi bi-envelope-at"></i>
                                         </div>
                                         <input name="correo" class="form-control bg-light" type="email" placeholder="Correo electrónico" required />
                                     </div>
@@ -101,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <?php } ?>
                                 <div class="d-flex gap-1 justify-content-center mt-3">
                                     <div>¿Ya tienes una cuenta?</div>
-                                    <a href="login.php" class="text-decoration-none text-blue-oscuro fw-semibold">Iniciar sesión</a>
+                                    <a href="index.php" class="text-decoration-none text-blue-oscuro fw-semibold">Iniciar sesión</a>
                                 </div>
                             </div>
                         </div>

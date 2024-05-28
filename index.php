@@ -88,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php } ?>
             <div class="d-flex gap-1 justify-content-center mt-3">
               <div>¿No estás registrado?</div>
-              <a href="#" class="text-decoration-none text-blue-oscuro fw-semibold">Registrate</a>
+              <a href="registro.php" class="text-decoration-none text-blue-oscuro fw-semibold">Registrate</a>
             </div>
             <div class="d-flex justify-content-around mt-3">
               <a href="#" class="text-decoration-none text-blue-oscuro">¿Olvidaste tu contraseña?</a>
