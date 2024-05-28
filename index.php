@@ -3,24 +3,37 @@
 include_once './Agencia.php';
 include_once './Conexion.php';
 
+// Inicia la sesión
+session_start();
+
 $obj = new Agencia();
 // Define una variable para almacenar el mensaje de error
 $mensaje_error = '';
 
 // Verifica si se han enviado datos del formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Obtén los valores del formulario
-    $usuario_correo = $_POST['email'];
-    $contraseña = $_POST['password'];
+    // Obtén los valores del formulario y sanitízalos
+    $usuario_correo = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+    $contraseña = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
 
-    // Llama a tu función validarLogin
-    if ($obj->validarLogin($usuario_correo, $contraseña)) {
-        // Si las credenciales son válidas, redirige al usuario a la página de inicio
-        header("Location: inicio.php");
-        exit();
+    // Validar los inputs
+    if (!filter_var($usuario_correo, FILTER_VALIDATE_EMAIL)) {
+        $mensaje_error = "Correo electrónico no válido.";
+    } elseif (strlen($contraseña) < 8) {
+        $mensaje_error = "La contraseña debe tener al menos 8 caracteres.";
+    } elseif (!preg_match('/[A-Za-z]/', $contraseña) || !preg_match('/[0-9]/', $contraseña)) {
+        $mensaje_error = "La contraseña debe contener letras y números.";
     } else {
-        // Si las credenciales no son válidas, muestra un mensaje de error
-        $mensaje_error = "Credenciales incorrectas. Intente de nuevo.";
+        // Llama a tu función validarLogin
+        if ($obj->validarLogin($usuario_correo, $contraseña)) {
+            // Si las credenciales son válidas, guarda la información del usuario en la sesión y redirige al usuario a la página de inicio
+            $_SESSION['user_email'] = $usuario_correo;
+            header("Location: inicio.php");
+            exit();
+        } else {
+            // Si las credenciales no son válidas, muestra un mensaje de error
+            $mensaje_error = "Credenciales incorrectas. Intente de nuevo.";
+        }
     }
 }
 ?>
@@ -56,13 +69,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="input-group-text bg-color-blue-oscuro">
               <img src="images/username-icon.svg" alt="username-icon" style="height: 1rem" />
             </div>
-            <input name="email" class="form-control bg-light" type="text" placeholder="Correo electrónico" />
+            <input name="email" class="form-control bg-light" type="email" placeholder="Correo electrónico" required />
           </div>
           <div class="input-group mt-1">
             <div class="input-group-text bg-color-blue-oscuro">
               <img src="images/password-icon.svg" alt="password-icon" style="height: 1rem" />
             </div>
-            <input name="password" class="form-control bg-light" type="password" placeholder="Contraseña" />
+            <input name="password" class="form-control bg-light" type="password" placeholder="Contraseña" required pattern="(?=.*\d)(?=.*[a-zA-Z]).{8,}" title="La contraseña debe tener al menos 8 caracteres, e incluir letras y números." />
           </div>
           <button type="submit" class="btn btn-blue-oscuro text-white w-100 mt-4 fw-semibold shadow-sm">Iniciar sesión</button>
         </form>

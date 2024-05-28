@@ -1,8 +1,8 @@
 <!-- Barra de Navegación -->
-<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-  <div class="container">
-    <a class="navbar-brand" href="inicio.php">
-        <img src="images/BlueBus_logo.png" alt="BlueBus Logo" class="logo mb-4" height="35" width="auto">
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-dark">
+  <div class="container d-flex align-items-center justify-content-between">
+    <a class="navbar-brand d-flex align-items-center" href="inicio.php">
+        <img src="images/BlueBus_logo.png" alt="BlueBus Logo" class="logo" height="35" width="auto">
     </a>
     <!-- Botón de hamburguesa para dispositivos móviles -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,7 +21,7 @@
           <a class="nav-link" href="#"><i class="bi bi-people"></i> Servicios</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"><i class="bi bi-envelope"></i> Contacto</a>
+          <a class="nav-link" href="#contacto"><i class="bi bi-envelope"></i> Contacto</a>
         </li>
       </ul>
     </div>

@@ -24,6 +24,7 @@ print_r($row)
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="./css/global.css">
   <link rel="stylesheet" href="./css/seleccionar_asiento.css">
+  <link href="css/navbar.css" rel="stylesheet" type="text/css"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
@@ -345,7 +346,7 @@ print_r($row)
   </main>
 
   <!-- Pie de Página -->
-  <footer class="bg-info text-white text-center py-4">
+  <footer id="contacto" class="bg-info text-white text-center py-4">
     <div class="container">
       <p class="mb-0"><i class="bi bi-telephone"></i> Teléfono: +123 456 789 | <i class="bi bi-geo-alt"></i> Dirección:
         Av. Principal 123, Ciudad Principal, País</p>
