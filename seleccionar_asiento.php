@@ -8,7 +8,8 @@ $sql = "SELECT b.NUM_ASIENTOS AS Asientos, v.HORA_VIA, v.FECHA_VIA, v.DURACION, 
 $res = mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
 $row = mysqli_fetch_assoc($res);
 
-function fechaCastellano ($fecha) {
+function fechaCastellano($fecha)
+{
   $fecha = substr($fecha, 0, 10);
   $numeroDia = date('d', strtotime($fecha));
   $dia = date('l', strtotime($fecha));
@@ -20,7 +21,7 @@ function fechaCastellano ($fecha) {
   $meses_ES = array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
   $meses_EN = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
   $nombreMes = str_replace($meses_EN, $meses_ES, $mes);
-  return $nombredia." ".$numeroDia." de ".$nombreMes." de ".$anio;
+  return $nombredia . " " . $numeroDia . " de " . $nombreMes . " de " . $anio;
 }
 ?>
 
@@ -37,14 +38,14 @@ function fechaCastellano ($fecha) {
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="./css/global.css">
   <link rel="stylesheet" href="./css/seleccionar_asiento.css">
-  <link href="css/navbar.css" rel="stylesheet" type="text/css"/>
+  <link href="css/navbar.css" rel="stylesheet" type="text/css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 </head>
 
 <body>
-<?php require_once "components/navbar.php"; ?>
+  <?php require_once "components/navbar.php"; ?>
   <main class="py-4 d-flex flex-column align-items-start mx-auto" style="max-width: 64rem;">
     <div class="w-100 text-center mb-4">
       <p class="fs-2 fw-bolder">Elección de asientos</p>
@@ -66,25 +67,25 @@ function fechaCastellano ($fecha) {
               $nrAsientos = $row['Asientos'];
               $i = 1;
               $j = 2;
-              while($i<=$nrAsientos){
-                if($j == 4){?>
-              <li class="asiento-item"> </li>
-          <?php
-                $j=0;
-                }else{?>
-              <li id="asiento" class="asiento-item">
-                <input onclick="handleClick('<?php echo $row['PRECIO'] ?>', <?php echo $i;?>)" type="checkbox" class="btn-check" id="asiento-<?php echo $i;?>" autocomplete="off" >
-                <label class="btn btn-outline-primary asiento-btn" for="asiento-<?php echo $i;?>"><?php echo $i;?></label><br>
-              </li>
-          <?php  
-                $i=$i+1;
-                $j=$j+1;
+              while ($i <= $nrAsientos) {
+                if ($j == 4) { ?>
+                  <li class="asiento-item"> </li>
+                <?php
+                  $j = 0;
+                } else { ?>
+                  <li id="asiento" class="asiento-item">
+                    <input onclick="handleClick('<?php echo $row['PRECIO'] ?>', <?php echo $i; ?>)" type="checkbox" class="btn-check" id="asiento-<?php echo $i; ?>" autocomplete="off">
+                    <label class="btn btn-outline-primary asiento-btn" for="asiento-<?php echo $i; ?>"><?php echo $i; ?></label><br>
+                  </li>
+              <?php
+                  $i = $i + 1;
+                  $j = $j + 1;
                 }
-               } ?>
-             
+              } ?>
+
             </ul>
           </div>
-         
+
         </div>
       </div>
       <div class="d-flex flex-column" style="flex: none; width: 400px; gap: 2rem;">
@@ -98,14 +99,14 @@ function fechaCastellano ($fecha) {
             </div>
             <div id="content">
               <ul class="timeline" style="padding-left: 1rem;">
-                <li class="event" data-date="<?php echo date_format(date_create($row["HORA_VIA"]),"g:i A");?>">
+                <li class="event" data-date="<?php echo date_format(date_create($row["HORA_VIA"]), "g:i A"); ?>">
                   <h3><?= $row["Origen"] ?></h3>
                 </li>
                 <?php
-                    $time = strtotime(date_format(date_create($row["HORA_VIA"]),"H:i"));
-                    $endTime = date("H:i A", strtotime('+'.((int)explode("h", $row["DURACION"])[0]) * 60 + (int)explode("min", explode("h ", $row["DURACION"])[1])[0].' minutes', $time));
-                  ?>
-                <li class="event" data-date="<?php echo $endTime?>">
+                $time = strtotime(date_format(date_create($row["HORA_VIA"]), "H:i"));
+                $endTime = date("H:i A", strtotime('+' . ((int)explode("h", $row["DURACION"])[0]) * 60 + (int)explode("min", explode("h ", $row["DURACION"])[1])[0] . ' minutes', $time));
+                ?>
+                <li class="event" data-date="<?php echo $endTime ?>">
                   <h3><?= $row["Destino"] ?></h3>
                 </li>
               </ul>
@@ -118,7 +119,7 @@ function fechaCastellano ($fecha) {
           </div>
           <div class="card-body px-4 py-4">
             <ul id="asientosElegidos" class="list-group mb-3">
-              
+
             </ul>
             <ul class="list-group">
               <li id="totalAsientos" class="list-group-item d-flex justify-content-between fw-medium">
@@ -148,36 +149,35 @@ function fechaCastellano ($fecha) {
   <!-- Script de Bootstrap -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    function handleClick(precio_const, asiento){
+    function handleClick(precio_const, asiento) {
 
-      if (document.getElementById("asiento-"+asiento).checked){
-        
+      if (document.getElementById("asiento-" + asiento).checked) {
+
         addTask(precio_const, asiento);
 
-      }else{
-        deleteTask(precio_const,asiento);
+      } else {
+        deleteTask(precio_const, asiento);
       }
     }
 
-    let addTask = (precio_const, asiento) =>{
-      asientosElegidos.innerHTML +=`<li id=`+asiento+` class="list-group-item d-flex justify-content-between">
-                <span>`+asiento+`</span>
-                <span>S/.`+precio_const+`</span>
+    let addTask = (precio_const, asiento) => {
+      asientosElegidos.innerHTML += `<li id=` + asiento + ` class="list-group-item d-flex justify-content-between">
+                <span>` + asiento + `</span>
+                <span>S/.` + precio_const + `</span>
               </li>`;
       updateTask(precio_const);
     };
 
-    let deleteTask = (precio_const,id) =>{
+    let deleteTask = (precio_const, id) => {
       let taskToDelete = document.getElementById(id);
       asientosElegidos.removeChild(taskToDelete);
       updateTask(precio_const);
     };
 
-    let updateTask = (precio_base = 1) =>{
+    let updateTask = (precio_base = 1) => {
       let elementos = asientosElegidos.querySelectorAll('li').length;
-      total= elementos*precio_base;
-      totalAsientos.innerHTML= `<span>Total</span>
-                <span>S/. `+total+` </span>`;
+      total = elementos * precio_base;
+      totalAsientos.innerHTML = `<span>Total</span> <span>S/. ` + total + ` </span>`;
     };
   </script>
 </body>

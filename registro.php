@@ -38,6 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -45,8 +46,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>BlueBus - Registro</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link href="css/estilo-registro.css" rel="stylesheet" type="text/css"/>
+    <link href="css/estilo-registro.css" rel="stylesheet" type="text/css" />
 </head>
+
 <body class="d-flex justify-content-center align-items-center vh-100 bg-color-blue-oscuro">
     <div class="container">
         <div class="row justify-content-center align-items-center">
@@ -86,11 +88,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     </div>
                                     <button type="submit" class="btn btn-blue-oscuro text-white w-100 mt-4 fw-semibold shadow-sm">Registrarse</button>
                                 </form>
-                                <?php if(!empty($mensaje_error)) { ?>
+                                <?php if (!empty($mensaje_error)) { ?>
                                     <div class="alert alert-danger mt-3" role="alert">
                                         <?php echo $mensaje_error; ?>
                                     </div>
-                                <?php } elseif(!empty($mensaje_exito)) { ?>
+                                <?php } elseif (!empty($mensaje_exito)) { ?>
                                     <div class="alert alert-success mt-3" role="alert">
                                         <?php echo $mensaje_exito; ?>
                                     </div>
@@ -107,4 +109,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 </body>
+
 </html>

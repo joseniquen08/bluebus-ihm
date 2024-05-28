@@ -23,4 +23,3 @@ if (isset($_GET['origen']) && isset($_GET['destino']) && isset($_GET['fecha'])) 
 } else {
     echo 'missing-parameters';
 }
-?>

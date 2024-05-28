@@ -7,7 +7,7 @@ require_once "session_share.php";
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-dark">
   <div class="container d-flex align-items-center justify-content-between">
     <a class="navbar-brand d-flex align-items-center" href="inicio.php">
-        <img src="images/BlueBus_logo.png" alt="BlueBus Logo" class="logo" height="35" width="auto">
+      <img src="images/BlueBus_logo.png" alt="BlueBus Logo" class="logo" height="35" width="auto">
     </a>
     <!-- Botón de hamburguesa para dispositivos móviles -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,9 +33,15 @@ require_once "session_share.php";
             <i class="bi bi-person"></i> Hola, <?php echo isset($_SESSION['user_data']['NOMBRES']) ? htmlspecialchars($_SESSION['user_data']['NOMBRES']) : 'Invitado'; ?>
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-            <li>
-              <a class="dropdown-item" href="logout.php"><i class="bi bi-box-arrow-left"></i> Cerrar Sesión</a>
-            </li>
+            <?php if (isset($_SESSION['user_data']['NOMBRES'])) : ?>
+              <li>
+                <a class="dropdown-item" href="logout.php"><i class="bi bi-box-arrow-left me-1"></i> Cerrar Sesión</a>
+              </li>
+            <?php else : ?>
+              <li>
+                <a class="dropdown-item" href="index.php"><i class="bi bi-box-arrow-right me-1"></i> Iniciar Sesión</a>
+              </li>
+            <?php endif; ?>
           </ul>
         </li>
       </ul>
