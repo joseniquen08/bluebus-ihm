@@ -81,7 +81,7 @@ class Agencia {
     // BÚSQUEDA DE VIAJES POR ORIGEN, DESTINO Y FECHA
     function buscarViajes($origen_cod, $destino_cod, $fecha_via) {
         $cn = new Conexion();
-        $sql = "CALL BuscarViajes('$origen_cod', '$destino_cod', '$fecha_via')";
+        $sql = "SELECT * FROM DESTINO WHERE ORIGEN = '$origen_cod' AND DESTINO = '$destino_cod' AND FECHA_VIA = '$fecha_via'";
         $res = mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
         $vec = array();
         while ($f = mysqli_fetch_array($res)) {

@@ -14,17 +14,17 @@ $listaDestinos = $obj->ListarDestinos();
 <!DOCTYPE html>
 <html lang="es">
   <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Inicio - Empresa de Transporte Terrestre</title>
-      <!-- Enlace a la hoja de estilos de Bootstrap -->
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-      <!-- Enlace a los iconos de Bootstrap -->
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-      <link href="css/incio_style.css" rel="stylesheet" type="text/css"/>
-      <link href="css/navbar.css" rel="stylesheet" type="text/css"/>
-      <!-- Enlace a jQuery (necesario para AJAX) -->
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio - Empresa de Transporte Terrestre</title>
+    <!-- Enlace a la hoja de estilos de Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Enlace a los iconos de Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="css/incio_style.css" rel="stylesheet" type="text/css"/>
+    <link href="css/navbar.css" rel="stylesheet" type="text/css"/>
+    <!-- Enlace a jQuery (necesario para AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
 
   <body>
@@ -128,81 +128,79 @@ $listaDestinos = $obj->ListarDestinos();
     
     <!-- Script para formulario -->
     <script>
-        $(document).ready(function() {
-            // Variables para campos
-            var origenField = $('#floatingSelectOrigen');
-            var destinoField = $('#floatingSelectDestino');
-            var fechaField = $('#floatingInputFecha');
-            var searchButton = $('#search-button');
+      $(document).ready(function() {
+          var origenField = $('#floatingSelectOrigen');
+          var destinoField = $('#floatingSelectDestino');
+          var fechaField = $('#floatingInputFecha');
+          var searchButton = $('#search-button');
 
-            // Función para habilitar o deshabilitar el botón de búsqueda
-            function toggleSearchButton() {
-                if (origenField.val() && destinoField.val() && fechaField.val()) {
-                    searchButton.prop('disabled', false);
-                } else {
-                    searchButton.prop('disabled', true);
-                }
-            }
+          function toggleSearchButton() {
+              if (origenField.val() && destinoField.val() && fechaField.val()) {
+                  searchButton.prop('disabled', false);
+              } else {
+                  searchButton.prop('disabled', true);
+              }
+          }
 
-            // Al cambiar el origen, actualizar los destinos
-            origenField.change(function() {
-                var origen = $(this).val();
-                destinoField.prop('disabled', false);
-                destinoField.html('<option selected disabled>Elije...</option>');
+          origenField.change(function() {
+              var origen = $(this).val();
+              destinoField.prop('disabled', false);
+              destinoField.html('<option selected disabled>Elije...</option>');
 
-                <?php
-                // Preparar el array de destinos para JavaScript
-                $destinos = [];
-                foreach ($listaDestinos as $destino) {
-                    $destinos[$destino['COD_DESTINO']] = $destino['NOM_DESTINO'];
-                }
-                ?>
+              <?php
+              $destinos = [];
+              foreach ($listaDestinos as $destino) {
+                  $destinos[$destino['COD_DESTINO']] = $destino['NOM_DESTINO'];
+              }
+              ?>
 
-                var destinos = <?php echo json_encode($destinos); ?>;
+              var destinos = <?php echo json_encode($destinos); ?>;
 
-                for (var cod in destinos) {
-                    if (cod !== origen) {
-                        destinoField.append('<option value="' + cod + '">' + destinos[cod] + '</option>');
-                    }
-                }
+              for (var cod in destinos) {
+                  if (cod !== origen) {
+                      destinoField.append('<option value="' + cod + '">' + destinos[cod] + '</option>');
+                  }
+              }
 
-                toggleSearchButton();
-            });
+              toggleSearchButton();
+          });
 
-            // Verificar los campos para habilitar/deshabilitar el botón de búsqueda
-            destinoField.change(toggleSearchButton);
-            fechaField.change(toggleSearchButton);
+          destinoField.change(toggleSearchButton);
+          fechaField.change(toggleSearchButton);
 
-            // Manejar el envío del formulario usando AJAX
-            $('#search-form').submit(function(event) {
-                event.preventDefault();
+          $('#search-form').submit(function(event) {
+              event.preventDefault();
 
-                var origen = origenField.val();
-                var destino = destinoField.val();
-                var fecha = fechaField.val();
+              var origen = origenField.val();
+              var destino = destinoField.val();
+              var fecha = fechaField.val();
 
-                $.ajax({
-                    url: 'buscar_viajes.php',
-                    method: 'GET',
-                    data: {
-                        origen: origen,
-                        destino: destino,
-                        fecha: fecha
-                    },
-                    success: function(response) {
-                        if (response.trim() === 'no-results') {
-                            $('#alerta').html('<div class="alert alert-warning" role="alert">No se encontraron viajes para los criterios seleccionados.</div>');
-                        } else {
-                            window.location.href = 'viajes.php?origen=' + origen + '&destino=' + destino + '&fecha=' + fecha;
-                        }
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        console.error('Error: ' + textStatus + ' - ' + errorThrown);
-                    }
-                });
-            });
-        });
-    </script>
+              $.ajax({
+                  url: 'buscar_viajes_ajax.php',
+                  method: 'GET',
+                  data: {
+                      origen: origen,
+                      destino: destino,
+                      fecha: fecha
+                  },
+                  success: function(response) {
+                      if (response.trim() === 'no-results') {
+                          $('#alerta').html('<div class="alert alert-warning" role="alert">No se encontraron viajes para los criterios seleccionados.</div>');
+                      } else if (response.trim() === 'invalid-date') {
+                          $('#alerta').html('<div class="alert alert-danger" role="alert">La fecha ingresada es inválida.</div>');
+                      } else if (response.trim() === 'missing-parameters') {
+                          $('#alerta').html('<div class="alert alert-danger" role="alert">Faltan parámetros para realizar la búsqueda.</div>');
+                      } else {
+                          window.location.href = 'viajes.php?origen=' + origen + '&destino=' + destino + '&fecha=' + fecha;
+                      }
+                  },
+                  error: function(jqXHR, textStatus, errorThrown) {
+                      console.error('Error: ' + textStatus + ' - ' + errorThrown);
+                  }
+              });
+          });
+      });
+  </script>
 
     <!-- Contenedores de Viajes -->
     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">

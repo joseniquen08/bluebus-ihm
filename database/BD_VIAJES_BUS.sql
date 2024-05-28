@@ -289,7 +289,10 @@ CREATE PROCEDURE BuscarViajes (
     IN fecha_via DATE
 )
 BEGIN
-    SELECT * FROM VIAJE WHERE ORIGEN = origen_cod AND DESTINO = destino_cod AND FECHA_VIA = fecha_via;
+    SELECT * FROM VIAJE 
+    WHERE ORIGEN = origen_cod 
+    AND DESTINO = destino_cod 
+    AND FECHA_VIA = fecha_via;
 END$$
 DELIMITER ;
 
