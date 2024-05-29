@@ -130,7 +130,7 @@ function fechaCastellano($fecha)
           </div>
         </div>
         <div>
-          <button class="btn btn-primary w-100" style="background: #052659 !important; border-color: #052659 !important;">Confirmar pasajeros</button>
+          <button class="btn btn-primary w-100" style="background: #052659 !important; border-color: #052659 !important;"><a href="checkout.php">Confirmar pasajeros</a></button>
         </div>
       </div>
     </div>
