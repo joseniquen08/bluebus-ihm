@@ -3,10 +3,15 @@ require_once './Conexion.php';
 
 $cod_via = isset($_REQUEST["COD_VIA"]) ? $_REQUEST["COD_VIA"] : "VIA001";
 
-session_start();
+// session_start();
 
-$selected_seats = $_SESSION['selected_seats'];
-$total_price = $_SESSION['total_price'];
+if (isset($_SESSION['selected_seats'])) {
+    $selected_seats = $_SESSION['selected_seats'];
+}
+
+if (isset($_SESSION['total_price'])) {
+    $total_price = $_SESSION['total_price'];
+}
 
 $cn = new Conexion();
 $sql = "SELECT v.HORA_VIA, v.FECHA_VIA, v.DURACION, d.NOM_DESTINO AS Destino, dd.NOM_DESTINO AS Origen FROM viaje AS v JOIN destino AS d ON d.COD_DESTINO = v.DESTINO JOIN destino AS dd ON dd.COD_DESTINO = v.ORIGEN WHERE COD_VIA = '$cod_via'";
@@ -41,61 +46,61 @@ $row = mysqli_fetch_assoc($res);
     <!-- Navbar -->
     <?php require_once "components/navbar.php"; ?>
     <div class="main-content">
-    <div class="container">
-        <div class="row mt-5">
-            <!-- Detalle del viaje -->
-            <div class="col-lg-8">
-                <div class="card mb-3">
-                    <div class="card-header">
-                        Detalle del viaje
+        <div class="container">
+            <div class="row mt-5">
+                <!-- Detalle del viaje -->
+                <div class="col-lg-8">
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            Detalle del viaje
+                        </div>
+                        <div class="card-body">
+                            <h3><?php echo $row['Origen'] . ' - ' . $row['Destino']; ?></h3>
+                            <p><?php echo $row['FECHA_VIA'] . ' ' . $row['HORA_VIA']; ?></p>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <h3><?php echo $row['Origen'] . ' - ' . $row['Destino']; ?></h3>
-                        <p><?php echo $row['FECHA_VIA'] . ' ' . $row['HORA_VIA']; ?></p>
+                    <!-- Asientos seleccionados -->
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            Asientos seleccionados
+                        </div>
+                        <div class="card-body">
+                            <ul>
+                                <li>Asiento 25</li>
+                                <li>Asiento 26</li>
+                                <li>Asiento 27</li>
+                                <li>Asiento 28</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Datos del comprador -->
+                    <div class="card">
+                        <div class="card-header">
+                            Datos del comprador
+                        </div>
+                        <div class="card-body">
+                            <p>Nombres: Flavio Sebastian</p>
+                            <p>Apellidos: Villanueva Medina</p>
+                            <p>Correo electrónico: flaviovm2013@gmail.com</p>
+                        </div>
                     </div>
                 </div>
-                <!-- Asientos seleccionados -->
-                <div class="card mb-3">
-                    <div class="card-header">
-                        Asientos seleccionados
-                    </div>
-                    <div class="card-body">
-                        <ul>
-                            <li>Asiento 25</li>
-                            <li>Asiento 26</li>
-                            <li>Asiento 27</li>
-                            <li>Asiento 28</li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- Datos del comprador -->
-                <div class="card">
-                    <div class="card-header">
-                        Datos del comprador
-                    </div>
-                    <div class="card-body">
-                        <p>Nombres: Flavio Sebastian</p>
-                        <p>Apellidos: Villanueva Medina</p>
-                        <p>Correo electrónico: flaviovm2013@gmail.com</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Resumen del pedido -->
-            <div class="col-lg-4">
-                <div class="card">
-                    <div class="card-header">
-                        Resumen del pedido
-                    </div>
-                    <div class="card-body">
-                        <p>Cantidad de asientos: 4</p>
-                        <p>Total: S/. 320.00</p>
-                        <button class="btn btn-primary">Realizar pago</button>
+                <!-- Resumen del pedido -->
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-header">
+                            Resumen del pedido
+                        </div>
+                        <div class="card-body">
+                            <p>Cantidad de asientos: 4</p>
+                            <p>Total: S/. 320.00</p>
+                            <button class="btn btn-primary">Realizar pago</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-        </div>
     <br><br><br><br><br>
     <!-- Pie de Página -->
     <footer id="contacto" class="bg-info text-white text-center py-4">
