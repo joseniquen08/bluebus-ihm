@@ -27,6 +27,7 @@ $row = mysqli_fetch_assoc($res);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout | BlueBus</title>
+    <link rel="shortcut icon" href="images/BlueBus_logo.png" type="image/x-icon">
     <!-- Enlace a la hoja de estilos de Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Enlace a los iconos de Bootstrap -->

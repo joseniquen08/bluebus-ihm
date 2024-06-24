@@ -32,7 +32,6 @@ body::-webkit-scrollbar {
 
 .card {
     border-color: #ffffff;
-    width: max-content !important;
 }
 
 .viaje-card:hover {

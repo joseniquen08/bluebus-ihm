@@ -140,7 +140,7 @@ INSERT INTO VIAJE (COD_VIA, FECHA_VIA, HORA_VIA, DURACION, BUS, DESTINO, ORIGEN,
 
 -- Rellenar la tabla USUARIO con tus datos y algunos adicionales
 INSERT INTO USUARIO (COD_USER, NOMBRES, APELLIDOS, CORREO, PASSWORD) VALUES
-('US1000', 'Flavio Sebastian', 'Villanueva Medina', 'flaviovm2013@gmail.com', 'Astro2024'),
+('US1000', 'Flavio Sebastian', 'Villanueva Medina', 'flaviovm2013@gmail.com', 'Ejemplo123!'),
 ('US1001', 'Juan', 'Perez', 'juanperez@gmail.com', 'Password123'),
 ('US1002', 'María', 'Gomez', 'mariagomez@gmail.com', 'SecurePass123'),
 ('US1003', 'Carlos', 'Lopez', 'carloslopez@gmail.com', 'Passw0rd!');
