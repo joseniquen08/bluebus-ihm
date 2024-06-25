@@ -1,7 +1,9 @@
 <?php
 require_once './Conexion.php';
 
-$cod_via = isset($_REQUEST["COD_VIA"]) ? $_REQUEST["COD_VIA"] : "VIA001";
+if (isset($_GET['COD_VIA'])) {
+  $cod_via = $_GET['COD_VIA'];
+}
 
 $cn = new Conexion();
 $sql = "SELECT b.NUM_ASIENTOS AS Asientos, v.HORA_VIA, v.FECHA_VIA, v.DURACION, d.NOM_DESTINO AS Destino, dd.NOM_DESTINO AS Origen, v.PRECIO_BASE AS PRECIO FROM viaje AS v JOIN destino AS d ON d.COD_DESTINO = v.DESTINO JOIN destino AS dd ON dd.COD_DESTINO = v.ORIGEN JOIN bus AS b ON b.PLACA = v.BUS WHERE COD_VIA = '$cod_via'";
@@ -114,24 +116,29 @@ function fechaCastellano($fecha)
             </div>
           </div>
         </div>
-        <div class="card">
-          <div class="card-header px-4 py-3">
-            <p class="mb-0 fw-semibold">Asientos elegidos</p>
-          </div>
-          <div class="card-body px-4 py-4">
-            <ul id="asientosElegidos" class="list-group mb-3">
+        <form id="datos-compra" action="/checkout_medium.php" method="post">
+          <div class="card">
+            <div class="card-header px-4 py-3">
+              <p class="mb-0 fw-semibold">Asientos elegidos</p>
+            </div>
+            <div class="card-body px-4 py-4">
+              <ul id="asientosElegidos" class="list-group mb-3">
 
-            </ul>
-            <ul class="list-group">
-              <li id="totalAsientos" class="list-group-item d-flex justify-content-between fw-medium">
-                <span>Total</span>
-                <span>S/. 0.00</span>
-              </li>
-            </ul>
+              </ul>
+              <ul class="list-group">
+                <li id="totalAsientos" class="list-group-item d-flex justify-content-between fw-medium">
+                  <span>Total</span>
+                  <span id="precioTotal">S/. 0.00</span>
+                </li>
+              </ul>
+            </div>
+            <input type="hidden" name="total_price" id="total_price_input">
+            <input type="hidden" name="selected_seats" id="selected_seats_input">
+            <input type="hidden" name="COD_VIA" value="<?php echo $cod_via; ?>">
           </div>
-        </div>
+        </form>
         <div>
-          <button class="btn btn-primary w-100" style="background: #052659 !important; border-color: #052659 !important;"><a href="checkout.php">Confirmar pasajeros</a></button>
+          <button form="datos-compra" type="checkout_medium" class="btn btn-primary w-100" style="background: #052659 !important; border-color: #052659 !important;">Confirmar pasajeros</a></button>
         </div>
       </div>
     </div>
@@ -150,27 +157,44 @@ function fechaCastellano($fecha)
   <!-- Script de Bootstrap -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
+    document.getElementById('datos-compra').addEventListener('submit', function() {
+      // Obtener el precio total del span
+      var precioTotalSpan = document.getElementById('precioTotal');
+      var precioTotal = precioTotalSpan.innerText.trim(); // Obtener el texto sin espacios al inicio o final
+
+      // Asignar el precio total al input oculto
+      document.getElementById('total_price_input').value = precioTotal;
+
+      // Obtener los asientos seleccionados
+      var asientosSeleccionados = [];
+      var asientosElegidosList = document.getElementById('asientosElegidos').querySelectorAll('li');
+      asientosElegidosList.forEach(function(asiento) {
+        var numeroAsiento = asiento.querySelector('span:first-child').innerText.trim();
+        asientosSeleccionados.push(numeroAsiento);
+      });
+
+      // Asignar los asientos seleccionados al input oculto
+      document.getElementById('selected_seats_input').value = JSON.stringify(asientosSeleccionados);
+    });
+
     function handleClick(precio_const, asiento) {
-
       if (document.getElementById("asiento-" + asiento).checked) {
-
         addTask(precio_const, asiento);
-
       } else {
         deleteTask(precio_const, asiento);
       }
     }
 
     let addTask = (precio_const, asiento) => {
-      asientosElegidos.innerHTML += `<li id=` + asiento + ` class="list-group-item d-flex justify-content-between">
-                <span>` + asiento + `</span>
-                <span>S/.` + precio_const + `</span>
-              </li>`;
+      asientosElegidos.innerHTML += `<li id="asiento-${asiento}" class="list-group-item d-flex justify-content-between">
+            <span>${asiento}</span>
+            <span>S/. ${precio_const}</span>
+        </li>`;
       updateTask(precio_const);
     };
 
     let deleteTask = (precio_const, id) => {
-      let taskToDelete = document.getElementById(id);
+      let taskToDelete = document.getElementById("asiento-" + id);
       asientosElegidos.removeChild(taskToDelete);
       updateTask(precio_const);
     };
@@ -178,7 +202,7 @@ function fechaCastellano($fecha)
     let updateTask = (precio_base = 1) => {
       let elementos = asientosElegidos.querySelectorAll('li').length;
       total = elementos * precio_base;
-      totalAsientos.innerHTML = `<span>Total</span> <span>S/. ` + total + ` </span>`;
+      totalAsientos.innerHTML = `<span>Total</span> <span id="precioTotal">S/. ${total.toFixed(2)}</span>`;
     };
   </script>
 </body>
