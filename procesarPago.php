@@ -20,6 +20,5 @@ $charge = $culqi->Charges->create(
     )
 );
 
-echo "El pago se ha realizado con éxito."
-
+echo "Exito";
 ?>
