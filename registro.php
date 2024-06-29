@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Llama a la función registrarUsuario
 
         try {
-            $obj->registrarUsuario($nombres, $apellidos, $correo, $password);
+            $obj->registrarUsuario($nombres, $apellidos, $correo, $password, 'cliente');
             $mensaje_exito = "Registro exitoso. Puede iniciar sesión.";
         } catch (Exception $e) {
             $mensaje_error = "Error al registrar el usuario. Intente de nuevo.";

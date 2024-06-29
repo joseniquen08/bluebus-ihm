@@ -16,10 +16,10 @@ class Agencia
     }
 
     // REGISTRO DE USUARIO
-    function registrarUsuario($nombres, $apellidos, $correo, $contraseña)
+    function registrarUsuario($nombres, $apellidos, $correo, $contraseña, $rol)
     {
         $cn = new Conexion();
-        $sql = "CALL RegistrarUsuario('$nombres', '$apellidos', '$correo', '$contraseña')";
+        $sql = "CALL RegistrarUsuario('$nombres', '$apellidos', '$correo', '$contraseña', '$rol')";
         mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
     }
 

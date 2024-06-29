@@ -115,7 +115,7 @@ function fechaCastellano($fecha)
             </div>
           </div>
         </div>
-        <form id="datos-compra" action="/checkout_medium.php" method="post">
+        <form id="datos-compra" action="checkout_medium.php" method="post">
           <div class="card">
             <div class="card-header px-4 py-3">
               <p class="mb-0 fw-semibold">Asientos elegidos</p>
