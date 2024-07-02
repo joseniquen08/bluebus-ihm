@@ -259,13 +259,18 @@ END$$
 DELIMITER ;
 
 DELIMITER $$
+
 CREATE PROCEDURE MostrarAsientosOcupados (
     IN viaje_cod CHAR(8)
 )
 BEGIN
-    SELECT * FROM ASIENTO WHERE COD_VIA = viaje_cod AND ESTADO = 'Vendido';
+    SELECT NUM_ASIENTO
+    FROM ASIENTO
+    WHERE COD_VIA = viaje_cod AND ESTADO = 'Vendido';
 END$$
+
 DELIMITER ;
+
 
 -- 7 - Compra de Boletos:
 DELIMITER $$
@@ -478,4 +483,51 @@ CREATE PROCEDURE BuscarUsuarioPorCorreo (
 BEGIN
     SELECT * FROM USUARIO WHERE CORREO = correo_usuario;
 END$$
+DELIMITER ;
+
+-- 28 - Compra de boletos proceso completo
+DELIMITER $$
+
+CREATE PROCEDURE ComprarBoleto_v2 (
+    IN usuario_cod CHAR(6),
+    IN viaje_cod CHAR(8),
+    IN asiento_id INT
+)
+BEGIN
+    DECLARE nueva_reserva_id INT;
+    DECLARE nuevo_codigo_venta INT;
+    
+    -- Insertar reserva
+    INSERT INTO RESERVA (COD_VIA, COD_USER, ID_ASIENTO) 
+    VALUES (viaje_cod, usuario_cod, asiento_id);
+    
+    SET nueva_reserva_id = LAST_INSERT_ID();
+    
+    -- Insertar venta asociada a la reserva
+    INSERT INTO VENTA (COD_RESERVA, FECHA_VENTA, MONTO_TOTAL, ESTADO_PAGO) 
+    VALUES (nueva_reserva_id, CURDATE(), 0, 'Pendiente');
+    
+    SET nuevo_codigo_venta = LAST_INSERT_ID();
+    
+    -- Actualizar estado del asiento a 'Reservado'
+    UPDATE ASIENTO 
+    SET ESTADO = 'Reservado' 
+    WHERE ID = asiento_id;
+    
+    -- Si el pago se completa
+    UPDATE ASIENTO 
+    SET ESTADO = 'Vendido' 
+    WHERE ID = asiento_id;
+    
+    UPDATE RESERVA 
+    SET ESTADO = 'Pagado' 
+    WHERE COD_RESERVA = nueva_reserva_id;
+    
+    UPDATE VENTA 
+    SET ESTADO_PAGO = 'Pagado' 
+    WHERE COD_VENTA = nuevo_codigo_venta;
+    
+    SELECT nuevo_codigo_venta;
+END$$
+
 DELIMITER ;

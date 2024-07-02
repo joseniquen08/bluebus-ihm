@@ -6,6 +6,8 @@ if (isset($_GET['COD_VIA'])) {
 }
 
 $cn = new Conexion();
+
+// Obtener los datos del viaje
 $sql = "SELECT b.NUM_ASIENTOS AS Asientos, v.HORA_VIA, v.FECHA_VIA, v.DURACION, d.NOM_DESTINO AS Destino, dd.NOM_DESTINO AS Origen, v.PRECIO_BASE AS PRECIO FROM viaje AS v JOIN destino AS d ON d.COD_DESTINO = v.DESTINO JOIN destino AS dd ON dd.COD_DESTINO = v.ORIGEN JOIN bus AS b ON b.PLACA = v.BUS WHERE COD_VIA = '$cod_via'";
 $res = mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
 $row = mysqli_fetch_assoc($res);
@@ -24,6 +26,14 @@ function fechaCastellano($fecha)
   $meses_EN = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
   $nombreMes = str_replace($meses_EN, $meses_ES, $mes);
   return $nombredia . " " . $numeroDia . " de " . $nombreMes . " de " . $anio;
+}
+
+// Obtener los asientos vendidos
+$sql_asientos_vendidos = "CALL MostrarAsientosOcupados('$cod_via')";
+$res_asientos_vendidos = mysqli_query($cn->conecta(), $sql_asientos_vendidos) or die(mysqli_error($cn->conecta()));
+$asientos_vendidos = [];
+while ($row_asiento = mysqli_fetch_assoc($res_asientos_vendidos)) {
+  $asientos_vendidos[] = $row_asiento['NUM_ASIENTO'];
 }
 ?>
 
@@ -74,9 +84,11 @@ function fechaCastellano($fecha)
                   <li class="asiento-item"> </li>
                 <?php
                   $j = 0;
-                } else { ?>
+                } else {
+                  $disabled = in_array($i, $asientos_vendidos) ? 'disabled' : '';
+                ?>
                   <li id="asiento" class="asiento-item">
-                    <input onclick="handleClick('<?php echo $row['PRECIO'] ?>', <?php echo $i; ?>)" type="checkbox" class="btn-check" id="asiento-<?php echo $i; ?>" autocomplete="off">
+                    <input onclick="handleClick('<?php echo $row['PRECIO'] ?>', <?php echo $i; ?>)" type="checkbox" class="btn-check" id="asiento-<?php echo $i; ?>" autocomplete="off" <?php echo $disabled; ?>>
                     <label class="btn btn-outline-primary asiento-btn" for="asiento-<?php echo $i; ?>"><?php echo $i; ?></label><br>
                   </li>
               <?php
@@ -137,7 +149,7 @@ function fechaCastellano($fecha)
           </div>
         </form>
         <div>
-          <button form="datos-compra" type="checkout_medium" class="btn btn-primary w-100" style="background: #052659 !important; border-color: #052659 !important;">Confirmar pasajeros</a></button>
+          <button form="datos-compra" type="checkout_medium" class="btn btn-primary w-100" style="background: #052659 !important; border-color: #052659 !important;">Confirmar pasajeros</button>
         </div>
       </div>
     </div>
@@ -154,17 +166,15 @@ function fechaCastellano($fecha)
 
 
   <!-- Script de Bootstrap -->
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     document.getElementById('datos-compra').addEventListener('submit', function() {
-      // Obtener el precio total del span
       var precioTotalSpan = document.getElementById('precioTotal');
-      var precioTotal = precioTotalSpan.innerText.trim(); // Obtener el texto sin espacios al inicio o final
+      var precioTotal = precioTotalSpan.innerText.trim();
 
-      // Asignar el precio total al input oculto
       document.getElementById('total_price_input').value = precioTotal;
 
-      // Obtener los asientos seleccionados
       var asientosSeleccionados = [];
       var asientosElegidosList = document.getElementById('asientosElegidos').querySelectorAll('li');
       asientosElegidosList.forEach(function(asiento) {
@@ -172,7 +182,6 @@ function fechaCastellano($fecha)
         asientosSeleccionados.push(numeroAsiento);
       });
 
-      // Asignar los asientos seleccionados al input oculto
       document.getElementById('selected_seats_input').value = JSON.stringify(asientosSeleccionados);
     });
 
@@ -184,16 +193,19 @@ function fechaCastellano($fecha)
       }
     }
 
+    let asientosElegidos = document.getElementById('asientosElegidos');
+    let totalAsientos = document.getElementById('totalAsientos');
+
     let addTask = (precio_const, asiento) => {
-      asientosElegidos.innerHTML += `<li id="asiento-${asiento}" class="list-group-item d-flex justify-content-between">
-            <span>${asiento}</span>
-            <span>S/. ${precio_const}</span>
-        </li>`;
+      asientosElegidos.innerHTML += `<li id="asiento-${asiento}-elegido" class="list-group-item d-flex justify-content-between">
+        <span>${asiento}</span>
+        <span>S/. ${precio_const}</span>
+    </li>`;
       updateTask(precio_const);
     };
 
     let deleteTask = (precio_const, id) => {
-      let taskToDelete = document.getElementById("asiento-" + id);
+      let taskToDelete = document.getElementById("asiento-" + id + "-elegido");
       asientosElegidos.removeChild(taskToDelete);
       updateTask(precio_const);
     };
