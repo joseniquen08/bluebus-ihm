@@ -20,7 +20,7 @@ require_once "session_share.php";
           <a class="nav-link" href="inicio.php"><i class="bi bi-house-door"></i> Inicio</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"><i class="bi bi-info-circle"></i> Nosotros</a>
+          <a class="nav-link" href="visualizer.php"><i class="bi bi-info-circle"></i> Nosotros</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#"><i class="bi bi-people"></i> Servicios</a>
