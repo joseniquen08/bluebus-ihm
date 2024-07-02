@@ -87,6 +87,52 @@ class Agencia
         mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
     }
 
+    // REALIZAR COMPRA
+    function comprar($cod_user, $cod_via, $total_price, $selected_seats_json)
+    {
+        $cn = new Conexion();
+        $conn = $cn->conecta();
+        // Preparar la consulta para evitar problemas de inyección SQL
+        $sql = "CALL registrarCompra(?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ssds', $cod_user, $cod_via, $total_price, $selected_seats_json);
+        if (!$stmt->execute()) {
+            die("Error en la ejecución del procedimiento: " . $stmt->error);
+        }
+        $stmt->close();
+        $conn->close();
+    }
+
+    // FUNCIÓN PARA OBTENER VENTAS REALIZADAS CON ASIENTOS COMPRADOS
+    function obtenerVentas()
+    {
+        $cn = new Conexion();
+        $sql = "
+        SELECT 
+            v.COD_VENTA, 
+            CONCAT(u.NOMBRES, ' ', u.APELLIDOS) AS COMPRADOR, 
+            v.FECHA_VENTA, 
+            v.MONTO_TOTAL, 
+            v.ESTADO_PAGO, 
+            GROUP_CONCAT(a.NUM_ASIENTO ORDER BY a.NUM_ASIENTO ASC) AS ASIENTOS_COMPRADOS
+        FROM 
+            VENTA v 
+        JOIN 
+            RESERVA r ON v.COD_RESERVA = r.COD_RESERVA 
+        JOIN 
+            USUARIO u ON r.COD_USER = u.COD_USER 
+        JOIN 
+            ASIENTO a ON r.ID_ASIENTO = a.ID
+        GROUP BY 
+            v.COD_VENTA, u.NOMBRES, u.APELLIDOS, v.FECHA_VENTA, v.MONTO_TOTAL, v.ESTADO_PAGO";
+        $res = mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
+        $vec = array();
+        while ($f = mysqli_fetch_array($res, MYSQLI_ASSOC)) {
+            $vec[] = $f;
+        }
+        return $vec;
+    }
+
     // BÚSQUEDA DE VIAJES POR ORIGEN, DESTINO Y FECHA
     function buscarViajes($origen_cod, $destino_cod, $fecha_via)
     {

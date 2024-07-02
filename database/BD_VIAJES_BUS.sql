@@ -150,21 +150,37 @@ INSERT INTO OFICINA (NUM_LOCAL, TELEFONO_FIJO, TELEFONO_CEL, DIRECCION, NOMBRE_O
 ('OFI001', '01-1234567', '999888777', 'Av. Arequipa 123', 'Oficina Principal'),
 ('OFI002', '01-9876543', '988777666', 'Av. Tacna 456', 'Oficina Central');
 
--- Rellenar la tabla ASIENTO con datos hipotéticos
--- Asumiendo que cada asiento tiene un precio adicional fijo
--- y que el precio base del viaje se multiplica por un factor según el tipo de servicio
-INSERT INTO ASIENTO (COD_VIA, NUM_ASIENTO, TIPO_ASIENTO, ESTADO, PRECIO) 
+
+-- Crear una tabla temporal para los números de asiento
+CREATE TEMPORARY TABLE Temp_Asientos (NUM_ASIENTO INT);
+
+-- Insertar números de asientos hasta 50 (ajusta según sea necesario)
+INSERT INTO Temp_Asientos (NUM_ASIENTO)
+VALUES (1), (2), (3), (4), (5), (6), (7), (8), (9), (10),
+        (11), (12), (13), (14), (15), (16), (17), (18), (19), (20),
+        (21), (22), (23), (24), (25), (26), (27), (28), (29), (30),
+        (31), (32), (33), (34), (35), (36), (37), (38), (39), (40),
+        (41), (42), (43), (44), (45), (46), (47), (48), (49), (50);
+
+-- Rellenar la tabla ASIENTO con datos basados en la capacidad del bus y los viajes
+INSERT INTO ASIENTO (COD_VIA, NUM_ASIENTO, TIPO_ASIENTO, ESTADO, PRECIO)
 SELECT 
     VIAJE.COD_VIA, 
-    NUM_ASIENTO, 
-    TIPO_ASIENTO, 
-    'Libre', 
+    Temp_Asientos.NUM_ASIENTO, 
+    'Económico' AS TIPO_ASIENTO, -- Puedes ajustar esto si hay diferentes tipos de asientos
+    'Libre' AS ESTADO, 
     (VIAJE.PRECIO_BASE * IF(TIPO_SERVICIO.TIPO_SERVICIO = 'Directo', 1.2, 1.0)) + 10 -- Ejemplo de cálculo del precio del asiento
 FROM 
     VIAJE 
     INNER JOIN BUS ON VIAJE.BUS = BUS.PLACA
     INNER JOIN TIPO_SERVICIO ON BUS.TIPO_BUS = TIPO_SERVICIO.TIPO_BUS
-    CROSS JOIN (SELECT 1 AS NUM_ASIENTO UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5) AS ASIENTOS_DISPONIBLES; -- Ajusta el número de asientos según la capacidad de los buses
+    CROSS JOIN Temp_Asientos
+WHERE 
+    Temp_Asientos.NUM_ASIENTO <= BUS.CAPACIDAD_CARGA;
+
+-- Eliminar la tabla temporal después de su uso
+DROP TEMPORARY TABLE Temp_Asientos;
+
 
 -- PROCEDURES
 -- 1 - Login de Usuarios:
@@ -529,5 +545,78 @@ BEGIN
     
     SELECT nuevo_codigo_venta;
 END$$
+
+DELIMITER ;
+
+-- 29 - REGISTRO DE COMPRA DEFINITIVO:
+
+DELIMITER //
+
+CREATE PROCEDURE registrarCompra(
+    IN p_cod_usu CHAR(6),
+    IN p_cod_via CHAR(8),
+    IN p_total DECIMAL(10, 2),
+    IN p_selected_seats JSON
+)
+BEGIN
+    DECLARE cod_reserva INT;
+    DECLARE seat INT;
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE seats_cursor CURSOR FOR 
+        SELECT ID 
+        FROM temp_selected_seats;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+    -- Crear una tabla temporal para almacenar los asientos seleccionados
+    CREATE TEMPORARY TABLE temp_selected_seats (ID INT);
+
+    -- Rellenar la tabla temporal con los asientos seleccionados
+    SET @index = 0;
+    WHILE @index < JSON_LENGTH(p_selected_seats) DO
+        SET seat = JSON_UNQUOTE(JSON_EXTRACT(p_selected_seats, CONCAT('$[', @index, ']')));
+        INSERT INTO temp_selected_seats (ID) VALUES (seat);
+        SET @index = @index + 1;
+    END WHILE;
+
+    -- Iniciar la transacción
+    START TRANSACTION;
+
+    -- Insertar en la tabla reserva
+    INSERT INTO reserva (COD_VIA, COD_USER, ID_ASIENTO) 
+    SELECT p_cod_via, p_cod_usu, ID FROM temp_selected_seats;
+
+    -- Obtener el ID de la reserva recién insertada
+    SET cod_reserva = LAST_INSERT_ID();
+
+    -- Insertar en la tabla venta
+    INSERT INTO venta (COD_RESERVA, FECHA_VENTA, MONTO_TOTAL, ESTADO_PAGO) 
+    VALUES (cod_reserva, NOW(), p_total, 'Pagado');
+
+    -- Abrir el cursor
+    OPEN seats_cursor;
+
+    read_loop: LOOP
+        FETCH seats_cursor INTO seat;
+        IF done THEN
+            LEAVE read_loop;
+        END IF;
+
+        -- Actualizar el estado del asiento
+        UPDATE asiento 
+        SET ESTADO = 'Vendido', PRECIO = PRECIO + p_total
+        WHERE NUM_ASIENTO = seat
+        AND COD_VIA = p_cod_via;
+
+    END LOOP;
+
+    -- Cerrar el cursor
+    CLOSE seats_cursor;
+
+    -- Eliminar la tabla temporal
+    DROP TEMPORARY TABLE IF EXISTS temp_selected_seats;
+
+    -- Confirmar la transacción
+    COMMIT;
+END //
 
 DELIMITER ;

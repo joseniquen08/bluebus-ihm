@@ -44,6 +44,7 @@
 
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"><a href="reportes.php"><i class="bi bi-file-text"></i> Reportes Generales</a></li>
+                        <li class="list-group-item"><a href="reporteVentas.php"><i class="bi bi-file-text"></i> Ventas</a></li>
                         <!-- Puedes agregar más elementos de reporte aquí -->
                     </ul>
                 </div>

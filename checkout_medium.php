@@ -58,6 +58,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <script src="https://checkout.culqi.com/js/v4"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- SweetAlert2 CSS and JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.9/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.9/dist/sweetalert2.min.js"></script>
 </head>
 
 <body>
@@ -108,6 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </div>
             </div>
+            <div id="alert-placeholder"></div>
         </div>
     </div>
     <br><br><br><br><br><br>
@@ -131,15 +135,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Abre el formulario con la configuración en Culqi.settings y CulqiOptions
             Culqi.settings({
                 title: 'BlueBus',
-                currency: 'PEN', // Este parámetro es requerido para realizar pagos yape
-                amount: <?= $price_culqi; ?>, // Este parámetro es requerido para realizar pagos yape
-                order: 'ord_live_0CjjdWhFpEAZlxlz', // Este parámetro es requerido para realizar pagos con pagoEfectivo, billeteras y Cuotéalo
-
+                currency: 'PEN',
+                amount: <?= $price_culqi; ?>,
+                order: 'ord_live_0CjjdWhFpEAZlxlz',
             });
 
             Culqi.options({
                 lang: "auto",
-                installments: false, // Habilitar o deshabilitar el campo de cuotas
+                installments: false,
                 paymentMethods: {
                     tarjeta: true,
                     yape: true,
@@ -149,44 +152,65 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     cuotealo: false,
                 },
                 style: {
-                    logo: 'https://i.ibb.co/t8t1j8k/Blue-Bus-logo.png', // URL de la imagen de logotipo
-                    bannerColor: '#052659', // hexadecimal
-                    buttonBackground: '#052659', // hexadecimal
-                    menuColor: '#052659', // hexadecimal
-                    linksColor: '#052659', // hexadecimal
-                    buttonText: '', // texto que tomará el botón
-                    buttonTextColor: '', // hexadecimal
-                    priceColor: '#052659' // hexadecimal
+                    logo: 'https://i.ibb.co/t8t1j8k/Blue-Bus-logo.png',
+                    bannerColor: '#052659',
+                    buttonBackground: '#052659',
+                    menuColor: '#052659',
+                    linksColor: '#052659',
+                    buttonText: '',
+                    buttonTextColor: '',
+                    priceColor: '#052659'
                 }
             });
             Culqi.open();
             e.preventDefault();
-        })
+        });
 
         function culqi() {
             if (Culqi.token) { // ¡Objeto Token creado exitosamente!
                 const token = Culqi.token.id;
                 const email = Culqi.token.email;
                 console.log('Se ha creado un Token: ', token);
-                //En esta linea de codigo debemos enviar el "Culqi.token.id"
-                //hacia tu servidor con Ajax
+                // Enviar el "Culqi.token.id" al servidor con AJAX
                 $.ajax({
                     url: 'procesarPago.php',
                     type: 'POST',
                     data: {
                         token: token,
                         email: email,
-                        total_price: <?= $price_culqi; ?>
+                        total_price: <?= $price_culqi; ?>,
+                        COD_VIA: '<?= $cod_via; ?>',
+                        selected_seats: '<?= json_encode($selected_seats); ?>'
                     }
                 }).done(function(resp) {
-                    console.log(resp);
+                    // Cierra el panel de Culqi antes de mostrar la alerta
+                    Culqi.close();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Pago exitoso',
+                        text: 'Pago y registro exitosos.',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Aceptar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = 'inicio.php';
+                        }
+                    });
+                }).fail(function(jqXHR, textStatus, errorThrown) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error en la transacción',
+                        text: 'Error en la transacción: ' + errorThrown,
+                        showConfirmButton: true,
+                        confirmButtonText: 'Aceptar'
+                    }).then(() => {
+                        Culqi.close();
+                    });
                 });
             } else if (Culqi.order) { // ¡Objeto Order creado exitosamente!
                 const order = Culqi.order;
                 console.log('Se ha creado el objeto Order: ', order);
-
             } else {
-                // Mostramos JSON de objeto error en consola
                 console.log('Error : ', Culqi.error);
             }
         };
