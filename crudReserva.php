@@ -1,3 +1,11 @@
+<?php
+include_once './Admin.php';
+
+$objAdmin = new Admin();
+$reservas = $objAdmin->listarReservasAdmin();
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -38,20 +46,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Ejemplo de fila de la tabla, borrar luego :)-->
-                    <tr>
-                        <td>001</td>
-                        <td>V001</td>
-                        <td>U001</td>
-                        <td>A001</td>
-                        <td>Activo</td>
-                        <td>
-                            <a href="#" class="btn btn-sm btn-success btn-crud" title="Añadir"><i class="bi bi-plus"></i></a>
-                            <a href="#" class="btn btn-sm btn-warning btn-crud" title="Editar"><i class="bi bi-pencil"></i></a>
-                            <a href="#" class="btn btn-sm btn-danger btn-crud" title="Eliminar"><i class="bi bi-trash"></i></a>
-                        </td>
-                    </tr>
-                    <!-- Agregar más filas aquí -->
+                    <?php foreach ($reservas as $reserva): ?>
+                      <tr>
+                          <td><?= $reserva['COD_RESERVA'] ?></td>
+                          <td><?= $reserva['COD_VIA'] ?></td>
+                          <td><?= $reserva['COD_USER'] ?></td>
+                          <td><?= $reserva['ID_ASIENTO'] ?></td>
+                          <td><?= $reserva['ESTADO'] ?></td>
+                          <td>
+                              <a href="#" class="btn btn-sm btn-success btn-crud" title="Añadir"><i class="bi bi-plus"></i></a>
+                              <a href="#" class="btn btn-sm btn-warning btn-crud" title="Editar"><i class="bi bi-pencil"></i></a>
+                              <a href="#" class="btn btn-sm btn-danger btn-crud" title="Eliminar"><i class="bi bi-trash"></i></a>
+                          </td>
+                      </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

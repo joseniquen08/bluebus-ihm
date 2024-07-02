@@ -2,7 +2,7 @@
 include_once './Admin.php';
 
 $objAdmin = new Admin();
-$viajes = $objAdmin->listarViajesAdmin();
+$destinos = $objAdmin->listarDestinosAdmin();
 
 ?>
 
@@ -12,7 +12,7 @@ $viajes = $objAdmin->listarViajesAdmin();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administrador | Viajes</title>
+    <title>Administrador | Destinos</title>
     <link rel="shortcut icon" href="images/BlueBus_logo.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -28,7 +28,7 @@ $viajes = $objAdmin->listarViajesAdmin();
 
     <!-- Header -->
     <header class="container mt-5 mb-4 text-center">
-        <h1 class="display-4">Mantenimiento de Viajes</h1>
+        <h1 class="display-4">Mantenimiento de Destinos</h1>
     </header>
 
     <!-- Main content -->
@@ -37,28 +37,20 @@ $viajes = $objAdmin->listarViajesAdmin();
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>COD_VIA</th>
-                        <th>FECHA_VIA</th>
-                        <th>HORA_VIA</th>
-                        <th>DURACION</th>
-                        <th>BUS</th>
-                        <th>ORIGEN</th>
-                        <th>DESTINO</th>
-                        <th>PRECIO_BASE</th>
+                        <th>COD_DESTINO</th>
+                        <th>NOM_DESTINO</th>
+                        <th>ESTADO</th>
+                        <th>DESCRIPCIÓN</th>
                         <th>HERRAMIENTAS CRUD</th>
                     </tr>
                 </thead>
                 <tbody>
-                  <?php foreach ($viajes as $viaje): ?>
+                  <?php foreach ($destinos as $destino): ?>
                       <tr>
-                          <td><?= $viaje['COD_VIA'] ?></td>
-                          <td><?= $viaje['FECHA_VIA'] ?></td>
-                          <td><?= $viaje['HORA_VIA'] ?></td>
-                          <td><?= $viaje['DURACION'] ?></td>
-                          <td><?= $viaje['BUS'] ?></td>
-                          <td><?= $viaje['ORIGEN'] ?></td>
-                          <td><?= $viaje['DESTINO'] ?></td>
-                          <td><?= $viaje['PRECIO_BASE'] ?></td>
+                          <td><?= $destino['COD_DESTINO'] ?></td>
+                          <td><?= $destino['NOM_DESTINO'] ?></td>
+                          <td><?= $destino['ESTADO'] ?></td>
+                          <td><?= $destino['DESCRIPCION'] ?></td>
                           <td>
                               <a href="#" class="btn btn-sm btn-success btn-crud" title="Añadir"><i class="bi bi-plus"></i></a>
                               <a href="#" class="btn btn-sm btn-warning btn-crud" title="Editar"><i class="bi bi-pencil"></i></a>

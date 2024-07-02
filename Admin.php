@@ -14,7 +14,7 @@ class Admin
         $resultado = $row['resultado'];
         return $resultado === '1';
     }
-    // USUARIOS
+    // USUARIOS ADMIN
     // REGISTRO DE USUARIO ADMIN
     function registrarUsuarioAdmin($nombres, $apellidos, $correo, $contraseña, $rol)
     {
@@ -29,7 +29,45 @@ class Admin
         $sql = "CALL ActualizarUsuarioAdmin('$codigo', '$nombres', '$apellidos', '$correo', '$contraseña', '$rol')";
         mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
     }
+
+
+    //  CRUD USUARIOS
+    // LISTADO DE USUARIOS
+    function listarUsuariosAdmin()
+    {
+        $cn = new Conexion();
+        $sql = "CALL ListarUsuariosAdmin()";
+        $res = mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
+
+        // Obtener todas las filas de resultado
+        $usuarios = array();
+        while ($fila = mysqli_fetch_assoc($res)) {
+            $usuarios[] = $fila;
+        }
+
+        mysqli_close($cn->conecta());
+        return $usuarios;
+    }
+
+
     // DESTINO
+    // LISTADO DE DESTINOS
+    function listarDestinosAdmin()
+    {
+        $cn = new Conexion();
+        $sql = "CALL ListarDestinosAdmin()";
+        $res = mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
+
+        // Obtener todas las filas de resultado
+        $destinos = array();
+        while ($fila = mysqli_fetch_assoc($res)) {
+            $destinos[] = $fila;
+        }
+
+        mysqli_close($cn->conecta());
+        return $destinos;
+    }
+
     // REGISTRAR DESTINO ADMIN
     function registrarDestinoAdmin($codigo, $nombre, $estado, $descripcion)
     {
@@ -45,7 +83,26 @@ class Admin
         $sql = "CALL ActualizarDestinoAdmin('$codigo', '$nombre', '$estado', '$descripcion')";
         mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
     }
+
+
     //VIAJES
+    // LISTADO DE USUARIOS
+    function listarViajesAdmin()
+    {
+        $cn = new Conexion();
+        $sql = "CALL ListarViajesAdmin()";
+        $res = mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
+
+        // Obtener todas las filas de resultado
+        $viajes = array();
+        while ($fila = mysqli_fetch_assoc($res)) {
+            $viajes[] = $fila;
+        }
+
+        mysqli_close($cn->conecta());
+        return $viajes;
+    }
+
     //REGISTRAR VIAJES ADMIN
     function insertarViajeAdmin($codigo, $fecha_via, $hora_via, $duracion, $cod_bus, $cod_destino, $cod_origen, $precio_base)
     {
@@ -66,5 +123,24 @@ class Admin
         $cn = new Conexion();
         $sql = "CALL EliminarViajeAdmin('$codigo')";
         mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
+    }
+
+
+    // RESERVAS
+    // LISTADO DE RESERVAS
+    function listarReservasAdmin()
+    {
+        $cn = new Conexion();
+        $sql = "CALL ListarReservasAdmin()";
+        $res = mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
+
+        // Obtener todas las filas de resultado
+        $reservas = array();
+        while ($fila = mysqli_fetch_assoc($res)) {
+            $reservas[] = $fila;
+        }
+
+        mysqli_close($cn->conecta());
+        return $reservas;
     }
 }

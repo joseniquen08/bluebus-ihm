@@ -1,3 +1,11 @@
+<?php
+include_once './Admin.php';
+
+$objAdmin = new Admin();
+$users = $objAdmin->listarUsuariosAdmin();
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -39,21 +47,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Ejemplo de fila de la tabla, borrar luego-->
+                  <?php foreach ($users as $user): ?>
                     <tr>
-                        <td>U001</td>
-                        <td>Juan</td>
-                        <td>Pérez</td>
-                        <td>juan.perez@example.com</td>
-                        <td>********</td>
-                        <td>Admin</td>
+                        <td><?= $user['COD_USER'] ?></td>
+                        <td><?= $user['NOMBRES'] ?></td>
+                        <td><?= $user['APELLIDOS'] ?></td>
+                        <td><?= $user['CORREO'] ?></td>
+                        <td><?= $user['PASSWORD'] ?></td>
+                        <td><?= $user['ROL'] ?></td>
                         <td>
                             <a href="#" class="btn btn-sm btn-success btn-crud" title="Añadir"><i class="bi bi-plus"></i></a>
                             <a href="#" class="btn btn-sm btn-warning btn-crud" title="Editar"><i class="bi bi-pencil"></i></a>
                             <a href="#" class="btn btn-sm btn-danger btn-crud" title="Eliminar"><i class="bi bi-trash"></i></a>
                         </td>
                     </tr>
-                    <!-- Agregar más filas aquí -->
+                  <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
