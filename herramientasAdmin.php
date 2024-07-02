@@ -30,7 +30,7 @@
                         Mantenimiento
                     </div>
                     <ul class="list-group list-group-flush">
-                      <li class="list-group-item"><a href="crudReserva.php"><i class="bi bi-calendar-check mr-1"></i> Reservas</a></li>
+                        <li class="list-group-item"><a href="crudReserva.php"><i class="bi bi-calendar-check mr-1"></i> Reservas</a></li>
                         <li class="list-group-item"><a href="crudUsuario.php"><i class="bi bi-person mr-1"></i> Usuarios</a></li>
                         <li class="list-group-item"><a href="crudViaje.php"><i class="bi bi-bus-front-fill mr-1"></i> Viajes</a></li>
                         <li class="list-group-item"><a href="crudDestino.php"><i class="bi bi-geo-fill mr-1"></i> Destinos</a></li>
@@ -52,7 +52,7 @@
             <div class="col-md-12">
                 <div class="card mb-3">
                     <div class="card-header custom-header">
-                        Reporte de Ventas(Ganancias) por Mes
+                        Reporte de Ventas por Mes
                     </div>
                     <div class="card-body">
                         <canvas id="ventasPorMesChart"></canvas>
