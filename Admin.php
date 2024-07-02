@@ -72,7 +72,7 @@ class Admin
     function registrarDestinoAdmin($codigo, $nombre, $estado, $descripcion)
     {
         $cn = new Conexion();
-        $sql = "CALL RegistrarUsuario('$codigo', '$nombre', '$estado', '$descripcion')";
+        $sql = "CALL RegistrarDestinoAdmin('$codigo', '$nombre', '$estado', '$descripcion')";
         mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
     }
 
