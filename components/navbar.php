@@ -30,7 +30,10 @@ require_once "session_share.php";
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="bi bi-person"></i> Hola, <?php if (isset($_SESSION['user_data']['NOMBRES'])) : ?>
+            <i class="bi bi-person"></i> Hola, <?php echo isset($_SESSION['user_data']['NOMBRES']) ? htmlspecialchars($_SESSION['user_data']['NOMBRES']) : 'Invitado'; ?>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <?php if (isset($_SESSION['user_data']['NOMBRES'])) : ?>
               <li>
                 <a class="dropdown-item" href="herramientasAdmin.php"><i class="bi bi-backpack4 me-1"></i> Herramientas de administrador</a>
               </li>
@@ -41,7 +44,7 @@ require_once "session_share.php";
               <li>
                 <a class="dropdown-item" href="index.php"><i class="bi bi-box-arrow-right me-1"></i> Iniciar Sesión</a>
               </li>
-            <?php endif;?>
+            <?php endif; ?>
           </ul>
         </li>
       </ul>
