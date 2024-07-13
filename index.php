@@ -139,7 +139,7 @@ $listaDestinos = $obj->ListarDestinos();
                 <div class="card-body d-flex flex-column">
                   <h5 class="card-title">Lima - Tumbes</h5>
                   <p class="card-text">Explora los mejores destinos costeros con nosotros.</p>
-                  <a href="#" class="btn btn-primary mt-auto"><i class="bi bi-eye"></i> Ver Detalles</a>
+                  <a href="infoTumbes.php" class="btn btn-primary mt-auto"><i class="bi bi-eye"></i> Ver Detalles</a>
                 </div>
               </div>
             </div>
@@ -149,7 +149,7 @@ $listaDestinos = $obj->ListarDestinos();
                 <div class="card-body d-flex flex-column">
                   <h5 class="card-title">Lima - Arequipa</h5>
                   <p class="card-text">Descripción corta del destino.</p>
-                  <a href="#" class="btn btn-primary mt-auto"><i class="bi bi-eye"></i> Ver Detalles</a>
+                  <a href="infoArequipa.php" class="btn btn-primary mt-auto"><i class="bi bi-eye"></i> Ver Detalles</a>
                 </div>
               </div>
             </div>
@@ -159,7 +159,7 @@ $listaDestinos = $obj->ListarDestinos();
                 <div class="card-body d-flex flex-column">
                   <h5 class="card-title">Arequipa - Lima</h5>
                   <p class="card-text">Descripción corta del destino.</p>
-                  <a href="#" class="btn btn-primary mt-auto"><i class="bi bi-eye"></i> Ver Detalles</a>
+                  <a href="infoLima.php" class="btn btn-primary mt-auto"><i class="bi bi-eye"></i> Ver Detalles</a>
                 </div>
               </div>
             </div>
@@ -175,7 +175,7 @@ $listaDestinos = $obj->ListarDestinos();
                 <div class="card-body d-flex flex-column">
                   <h5 class="card-title">Lima - Chimbote</h5>
                   <p class="card-text">Descripción corta del destino.</p>
-                  <a href="#" class="btn btn-primary mt-auto"><i class="bi bi-eye"></i> Ver Detalles</a>
+                  <a href="infoChimbote.php" class="btn btn-primary mt-auto"><i class="bi bi-eye"></i> Ver Detalles</a>
                 </div>
               </div>
             </div>
@@ -185,7 +185,7 @@ $listaDestinos = $obj->ListarDestinos();
                 <div class="card-body d-flex flex-column">
                   <h5 class="card-title">Lima - Chiclayo</h5>
                   <p class="card-text">Descripción corta del destino.</p>
-                  <a href="#" class="btn btn-primary mt-auto"><i class="bi bi-eye"></i> Ver Detalles</a>
+                  <a href="infoChiclayo.php" class="btn btn-primary mt-auto"><i class="bi bi-eye"></i> Ver Detalles</a>
                 </div>
               </div>
             </div>
@@ -195,7 +195,7 @@ $listaDestinos = $obj->ListarDestinos();
                 <div class="card-body d-flex flex-column">
                   <h5 class="card-title">Ica - Lima</h5>
                   <p class="card-text">Descripción corta del destino.</p>
-                  <a href="#" class="btn btn-primary mt-auto"><i class="bi bi-eye"></i> Ver Detalles</a>
+                  <a href="infoIca.php" class="btn btn-primary mt-auto"><i class="bi bi-eye"></i> Ver Detalles</a>
                 </div>
               </div>
             </div>
