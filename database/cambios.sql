@@ -1,4 +1,4 @@
---VIAJES
+
 INSERT INTO `viaje`(`COD_VIA`, `FECHA_VIA`, `HORA_VIA`, `DURACION`, `BUS`, `DESTINO`, `ORIGEN`, `PRECIO_BASE`) VALUES
 ('VIA021', '2024-07-19', '08:00:00', '02:30:00', 'ABC123', 'AREQUI', 'LIMA', 50.00), 
 ('VIA022', '2024-07-20', '09:00:00', '03:15:00', 'DEF456', 'CAMANA', 'LIMA', 55.00), 
@@ -22,7 +22,7 @@ INSERT INTO `viaje`(`COD_VIA`, `FECHA_VIA`, `HORA_VIA`, `DURACION`, `BUS`, `DEST
 ('VIA040', '2024-08-07', '11:00:00', '01:45:00', 'MNO345', 'CHIMBO', 'LIMA', 145.00);
 
 
--- USUARIO
+
 INSERT INTO `usuario`(`COD_USER`, `NOMBRES`, `APELLIDOS`, `CORREO`, `PASSWORD`) VALUES
 ('US1004', 'Juan', 'Perez', 'juan.perez@example.com', 'Pass1234'), 
 ('US1005', 'Maria', 'Lopez', 'maria.lopez@example.com', 'Lopez1234'), 
@@ -35,7 +35,7 @@ INSERT INTO `usuario`(`COD_USER`, `NOMBRES`, `APELLIDOS`, `CORREO`, `PASSWORD`) 
 ('US1012', 'Jose', 'Mendez', 'jose.mendez@example.com', 'Mendez12%'), 
 ('US1013', 'Sara', 'Vega', 'sara.vega@example.com', 'VegaSara12');
 
---RESERVA
+
 INSERT INTO `reserva`(`COD_RESERVA`, `COD_VIA`, `COD_USER`, `ID_ASIENTO`, `ESTADO`) VALUES
 ('001', 'VIA001', 'US1004', 1, 'Reservado'), 
 ('002', 'VIA003', 'US1005', 2, 'Reservado'), 
@@ -190,8 +190,6 @@ INSERT INTO`reserva`(`COD_RESERVA`, `COD_VIA`, `COD_USER`, `ID_ASIENTO`, `ESTADO
 ('149', 'VIA019', 'US1008', 79, 'Reservado'), 
 ('150', 'VIA020', 'US1009', 80, 'Reservado');
 
-
---VENTA
 INSERT INTO `venta`(`COD_VENTA`, `COD_RESERVA`, `FECHA_VENTA`, `MONTO_TOTAL`, `ESTADO_PAGO`) VALUES
 ('001', '031', '2024-07-05', 110.00, 'Pendiente'),
 ('002', '032', '2024-07-06', 130.00, 'Pendiente'),
@@ -243,6 +241,7 @@ INSERT INTO `venta`(`COD_VENTA`, `COD_RESERVA`, `FECHA_VENTA`, `MONTO_TOTAL`, `E
 ('048', '028', '2024-07-11', 130.00, 'Pagado'),
 ('049', '029', '2024-07-05', 130.00, 'Pagado'),
 ('050', '030', '2024-07-06', 130.00, 'Pagado');
+
 INSERT INTO`venta`(`COD_VENTA`, `COD_RESERVA`, `FECHA_VENTA`, `MONTO_TOTAL`, `ESTADO_PAGO`) VALUES
 (51, 51, '2024-02-01', 110.00, 'Pendiente'), 
 (52, 52, '2024-02-05', 130.00, 'Pendiente'), 
@@ -254,7 +253,8 @@ INSERT INTO`venta`(`COD_VENTA`, `COD_RESERVA`, `FECHA_VENTA`, `MONTO_TOTAL`, `ES
 (58, 58, '2024-02-25', 130.00, 'Pendiente'), 
 (59, 59, '2024-02-28', 130.00, 'Pendiente'), 
 (60, 60, '2024-02-03', 130.00, 'Pendiente'); 
--- Ventas para marzo
+
+
 INSERT INTO`venta`(`COD_VENTA`, `COD_RESERVA`, `FECHA_VENTA`, `MONTO_TOTAL`, `ESTADO_PAGO`) VALUES
 (61, 61, '2024-03-02', 110.00, 'Pendiente'), 
 (62, 62, '2024-03-06', 130.00, 'Pendiente'), 
@@ -276,7 +276,8 @@ INSERT INTO`venta`(`COD_VENTA`, `COD_RESERVA`, `FECHA_VENTA`, `MONTO_TOTAL`, `ES
 (78, 78, '2024-03-27', 130.00, 'Pendiente'), 
 (79, 79, '2024-03-30', 130.00, 'Pendiente'), 
 (80, 80, '2024-03-05', 130.00, 'Pendiente'); 
--- Ventas para abril
+
+
 INSERT INTO`venta`(`COD_VENTA`, `COD_RESERVA`, `FECHA_VENTA`, `MONTO_TOTAL`, `ESTADO_PAGO`) VALUES
 (81, 81, '2024-04-02', 110.00, 'Pendiente'), 
 (82, 82, '2024-04-06', 130.00, 'Pendiente'), 
@@ -325,7 +326,8 @@ INSERT INTO`venta`(`COD_VENTA`, `COD_RESERVA`, `FECHA_VENTA`, `MONTO_TOTAL`, `ES
 (123, 123, '2024-05-15', 130.00, 'Pendiente'), 
 (124, 124, '2024-05-18', 130.00, 'Pendiente'), 
 (125, 125, '2024-05-21', 130.00, 'Pendiente'); 
--- Ventas para junio
+
+
 INSERT INTO`venta`(`COD_VENTA`, `COD_RESERVA`, `FECHA_VENTA`, `MONTO_TOTAL`, `ESTADO_PAGO`) VALUES
 (126, 126, '2024-06-02', 110.00, 'Pendiente'), 
 (127, 127, '2024-06-06', 130.00, 'Pendiente'), 
