@@ -139,7 +139,7 @@ $listaDestinos = $obj->ListarDestinos();
                 <div class="card-body d-flex flex-column">
                   <h5 class="card-title">Lima - Tumbes</h5>
                   <p class="card-text">Explora los mejores destinos costeros con nosotros.</p>
-                  <a href="selecAsiento.php" class="btn btn-primary mt-auto"><i class="bi bi-eye"></i> Ver Detalles</a>
+                  <a href="#" class="btn btn-primary mt-auto"><i class="bi bi-eye"></i> Ver Detalles</a>
                 </div>
               </div>
             </div>
