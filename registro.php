@@ -100,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <?php } ?>
                                 <div class="d-flex gap-1 justify-content-center mt-3">
                                     <div>¿Ya tienes una cuenta?</div>
-                                    <a href="index.php" class="text-decoration-none text-blue-oscuro fw-semibold">Iniciar sesión</a>
+                                    <a href="login.php" class="text-decoration-none text-blue-oscuro fw-semibold">Iniciar sesión</a>
                                 </div>
                             </div>
                         </div>

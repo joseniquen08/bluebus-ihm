@@ -193,7 +193,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         confirmButtonText: 'Aceptar'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            window.location.href = 'inicio.php';
+                            window.location.href = 'index.php';
                         }
                     });
                 }).fail(function(jqXHR, textStatus, errorThrown) {
