@@ -127,94 +127,97 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Script de Culqi -->
     <script>
-        Culqi.publicKey = 'pk_test_6f2f52eb25c0c934';
+    Culqi.publicKey = 'pk_test_6f2f52eb25c0c934';
 
-        const btn_pagar = document.getElementById('btn_pagar');
+    const btn_pagar = document.getElementById('btn_pagar');
 
-        btn_pagar.addEventListener('click', function(e) {
-            // Abre el formulario con la configuración en Culqi.settings y CulqiOptions
-            Culqi.settings({
-                title: 'BlueBus',
-                currency: 'PEN',
-                amount: <?= $price_culqi; ?>,
-                order: 'ord_live_0CjjdWhFpEAZlxlz',
-            });
+    btn_pagar.addEventListener('click', function(e) {
+        e.preventDefault();
 
-            Culqi.options({
-                lang: "auto",
-                installments: false,
-                paymentMethods: {
-                    tarjeta: true,
-                    yape: true,
-                    bancaMovil: false,
-                    agente: false,
-                    billetera: false,
-                    cuotealo: false,
-                },
-                style: {
-                    logo: 'https://i.ibb.co/t8t1j8k/Blue-Bus-logo.png',
-                    bannerColor: '#052659',
-                    buttonBackground: '#052659',
-                    menuColor: '#052659',
-                    linksColor: '#052659',
-                    buttonText: '',
-                    buttonTextColor: '',
-                    priceColor: '#052659'
-                }
-            });
-            Culqi.open();
-            e.preventDefault();
+        // Abre el formulario con la configuración en Culqi.settings y CulqiOptions
+        Culqi.settings({
+            title: 'BlueBus',
+            currency: 'PEN',
+            amount: <?= $price_culqi; ?>,
+            order: 'ord_live_0CjjdWhFpEAZlxlz',
         });
 
-        function culqi() {
-            if (Culqi.token) { // ¡Objeto Token creado exitosamente!
-                const token = Culqi.token.id;
-                const email = Culqi.token.email;
-                console.log('Se ha creado un Token: ', token);
-                // Enviar el "Culqi.token.id" al servidor con AJAX
-                $.ajax({
-                    url: 'procesarPago.php',
-                    type: 'POST',
-                    data: {
-                        token: token,
-                        email: email,
-                        total_price: <?= $price_culqi; ?>,
-                        COD_VIA: '<?= $cod_via; ?>',
-                        selected_seats: '<?= json_encode($selected_seats); ?>'
-                    }
-                }).done(function(resp) {
-                    // Cierra el panel de Culqi antes de mostrar la alerta
-                    Culqi.close();
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Pago exitoso',
-                        text: 'Pago y registro exitosos.',
-                        showConfirmButton: true,
-                        confirmButtonText: 'Aceptar'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.href = 'index.php';
-                        }
-                    });
-                }).fail(function(jqXHR, textStatus, errorThrown) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error en la transacción',
-                        text: 'Error en la transacción: ' + errorThrown,
-                        showConfirmButton: true,
-                        confirmButtonText: 'Aceptar'
-                    }).then(() => {
-                        Culqi.close();
-                    });
-                });
-            } else if (Culqi.order) { // ¡Objeto Order creado exitosamente!
-                const order = Culqi.order;
-                console.log('Se ha creado el objeto Order: ', order);
-            } else {
-                console.log('Error : ', Culqi.error);
+        Culqi.options({
+            lang: "auto",
+            installments: false,
+            paymentMethods: {
+                tarjeta: true,
+                yape: true,
+                bancaMovil: false,
+                agente: false,
+                billetera: false,
+                cuotealo: false,
+            },
+            style: {
+                logo: 'https://i.ibb.co/t8t1j8k/Blue-Bus-logo.png',
+                bannerColor: '#052659',
+                buttonBackground: '#052659',
+                menuColor: '#052659',
+                linksColor: '#052659',
+                buttonText: '',
+                buttonTextColor: '',
+                priceColor: '#052659'
             }
-        };
-    </script>
+        });
+        Culqi.open();
+    });
+
+    function culqi() {
+        if (Culqi.token) { // ¡Objeto Token creado exitosamente!
+            const token = Culqi.token.id;
+            const email = Culqi.token.email;
+            console.log('Se ha creado un Token: ', token);
+            // Enviar el "Culqi.token.id" al servidor con AJAX
+            $.ajax({
+                url: 'procesarPago.php',
+                type: 'POST',
+                data: {
+                    token: token,
+                    email: '<?= htmlspecialchars($_SESSION['user_data']['CORREO']); ?>', // Asegúrate de que se está enviando el correo electrónico correcto
+                    total_price: <?= $price_culqi; ?>,
+                    COD_VIA: '<?= $cod_via; ?>',
+                    selected_seats: '<?= json_encode($selected_seats); ?>',
+                    destination: '<?= $row['Destino']; ?>', // Agregar datos del viaje
+                    origin: '<?= $row['Origen']; ?>', // Agregar datos del viaje
+                    date: '<?= $row['FECHA_VIA']; ?>', // Agregar datos del viaje
+                    time: '<?= $row['HORA_VIA']; ?>', // Agregar datos del viaje
+                    names: '<?= htmlspecialchars($_SESSION['user_data']['NOMBRES']); ?>', // Agregar datos del comprador
+                    surnames: '<?= htmlspecialchars($_SESSION['user_data']['APELLIDOS']); ?>' // Agregar datos del comprador
+                }
+            }).done(function(resp) {
+                // Cierra el panel de Culqi antes de mostrar la alerta
+                Culqi.close();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Pago exitoso',
+                    text: 'Pago y registro exitosos.',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Aceptar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = 'index.php';
+                    }
+                });
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error en la transacción',
+                    text: 'Hubo un error en la transacción. Por favor, inténtelo de nuevo.',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Aceptar'
+                });
+            });
+        } else {
+            console.log(Culqi.error);
+        }
+    }
+</script>
+
 </body>
 
 </html>
