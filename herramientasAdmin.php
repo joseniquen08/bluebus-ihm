@@ -52,7 +52,7 @@
             <div class="col-md-12">
                 <div class="card mb-3">
                     <div class="card-header custom-header">
-                        Reporte de Ventas por Mes
+                        Reporte de Ventas en Bruto por Mes
                     </div>
                     <div class="card-body">
                         <canvas id="ventasPorMesChart"></canvas>
@@ -79,13 +79,68 @@
             .then(data => {
                 // Configuración del gráfico
                 const ventasPorMes = {
-                    labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
                     datasets: [{
                         label: 'Ventas',
                         data: data,
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.6)', // Rojo
+                            'rgba(54, 162, 235, 0.6)', // Azul
+                            'rgba(255, 206, 86, 0.6)', // Amarillo
+                            'rgba(75, 192, 192, 0.6)', // Verde
+                            'rgba(153, 102, 255, 0.6)', // Morado
+                            'rgba(255, 159, 64, 0.6)', // Naranja
+                            'rgba(54, 162, 235, 0.6)', // Azul
+                            'rgba(255, 99, 132, 0.6)', // Rojo
+                            'rgba(75, 192, 192, 0.6)', // Verde
+                            'rgba(153, 102, 255, 0.6)', // Morado
+                            'rgba(255, 206, 86, 0.6)', // Amarillo
+                            'rgba(255, 159, 64, 0.6)' // Naranja
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 2,
+                        barThickness: 'flex',
+                        hoverBackgroundColor: [
+                            'rgba(255, 99, 132, 0.8)',
+                            'rgba(54, 162, 235, 0.8)',
+                            'rgba(255, 206, 86, 0.8)',
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(153, 102, 255, 0.8)',
+                            'rgba(255, 159, 64, 0.8)',
+                            'rgba(54, 162, 235, 0.8)',
+                            'rgba(255, 99, 132, 0.8)',
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(153, 102, 255, 0.8)',
+                            'rgba(255, 206, 86, 0.8)',
+                            'rgba(255, 159, 64, 0.8)'
+                        ],
+                        hoverBorderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ]
                     }]
                 };
 
@@ -93,19 +148,50 @@
                     type: 'bar',
                     data: ventasPorMes,
                     options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        },
-                        animation: {
-                            duration: 1000, // Duración de la animación en milisegundos
-                        },
+                        indexAxis: 'y',
+                        responsive: true,
                         plugins: {
                             legend: {
                                 display: true,
+                                position: 'top',
                                 labels: {
-                                    color: 'rgb(255, 99, 132)'
+                                    color: '#343a40',
+                                    font: {
+                                        size: 14,
+                                        weight: 'bold'
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                titleColor: '#fff',
+                                bodyColor: '#fff'
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: {
+                                    display: true,
+                                    color: 'rgba(0, 0, 0, 0.1)'
+                                },
+                                ticks: {
+                                    color: '#495057',
+                                    font: {
+                                        size: 12
+                                    }
+                                }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    display: true,
+                                    color: 'rgba(0, 0, 0, 0.1)'
+                                },
+                                ticks: {
+                                    color: '#495057',
+                                    font: {
+                                        size: 12
+                                    }
                                 }
                             }
                         }

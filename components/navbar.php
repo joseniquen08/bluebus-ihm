@@ -34,9 +34,11 @@ require_once "session_share.php";
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
             <?php if (isset($_SESSION['user_data']['NOMBRES'])) : ?>
-              <li>
-                <a class="dropdown-item" href="herramientasAdmin.php"><i class="bi bi-backpack4 me-1"></i> Herramientas de administrador</a>
-              </li>
+              <?php if ($_SESSION['user_data']['ROL'] == 'ADMIN') : ?>
+                <li>
+                  <a class="dropdown-item" href="herramientasAdmin.php"><i class="bi bi-backpack4 me-1"></i> Herramientas de administrador</a>
+                </li>
+              <?php endif; ?>
               <li>
                 <a class="dropdown-item" href="logout.php"><i class="bi bi-box-arrow-left me-1"></i> Cerrar Sesión</a>
               </li>

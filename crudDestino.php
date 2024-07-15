@@ -19,10 +19,11 @@ $destinos = $objAdmin->listarDestinosAdmin();
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link href="css/crud_styles.css" rel="stylesheet" type="text/css" />
   <link href="css/navbar.css" rel="stylesheet" type="text/css" />
+  <link href="css/destino-style.css" rel="stylesheet" type="text/css" />
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
   <!-- SweetAlert2 CSS and JS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.9/dist/sweetalert2.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.9/dist/sweetalert2.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.9/dist/sweetalert2.min.js"></script>
 </head>
 
 <body>

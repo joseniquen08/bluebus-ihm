@@ -17,7 +17,6 @@ $ventas = $objAgencia->obtenerVentas();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="./css/global.css">
-    <link rel="stylesheet" href="./css/reporteVentas.css">
     <link rel="stylesheet" href="./css/crud_styles.css">
     <link href="css/navbar.css" rel="stylesheet">
     <link rel="stylesheet" href="./css/reporteVentas.css"> <!-- Archivo CSS personalizado para animaciones -->

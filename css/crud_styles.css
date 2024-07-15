@@ -16,8 +16,8 @@ footer {
 }
 
 .custom-btn {
-  background-color: #052659 !important;
-  border-color: #052659 !important;
+    background-color: #052659 !important;
+    border-color: #052659 !important;
 }
 
 .table td a {
@@ -32,3 +32,8 @@ footer {
     font-size: 1.2rem;
 }
 
+@media (max-width: 768px) {
+    .table-responsive {
+        overflow-x: auto;
+    }
+}

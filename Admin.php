@@ -143,4 +143,25 @@ class Admin
         mysqli_close($cn->conecta());
         return $reservas;
     }
+
+    function insertarReservaAdmin($cod_via, $cod_user, $id_asiento) {
+        $cn = new Conexion();
+        $sql = "CALL InsertarReservaAdmin('$cod_via', '$cod_user', $id_asiento)";
+        mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
+        mysqli_close($cn->conecta());
+    }
+
+    function actualizarReservaAdmin($codigo_reserva, $nuevo_estado) {
+        $cn = new Conexion();
+        $sql = "CALL ActualizarEstadoReservaAdmin($codigo_reserva, '$nuevo_estado')";
+        mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
+        mysqli_close($cn->conecta());
+    }
+
+    function eliminarReservaAdmin($codigo_reserva) {
+        $cn = new Conexion();
+        $sql = "CALL EliminarReservaAdmin($codigo_reserva)";
+        mysqli_query($cn->conecta(), $sql) or die(mysqli_error($cn->conecta()));
+        mysqli_close($cn->conecta());
+    }
 }
