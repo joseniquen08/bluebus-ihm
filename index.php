@@ -1,4 +1,3 @@
-<!-- dasda -->
 <?php
 // Incluye el archivo Agencia.php que contiene tu función validarLogin
 include_once './Agencia.php';
