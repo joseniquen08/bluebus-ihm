@@ -36,6 +36,11 @@ $base_url = (isset($_SERVER["HTTPS"]) ? "https://" : "http://") . $_SERVER["HTTP
 
   <!-- Main content -->
   <main class="container mb-5">
+    <!-- Botón de Añadir -->
+    <div class="d-flex justify-content-end">
+      <button type="button" class="btn btn-primary custom-btn mb-3" data-bs-toggle="modal" data-bs-target="#agregarModal">Añadir</button>
+    </div>
+
     <div class="table-responsive">
       <table class="table table-bordered">
         <thead>
@@ -63,7 +68,6 @@ $base_url = (isset($_SERVER["HTTPS"]) ? "https://" : "http://") . $_SERVER["HTTP
               <td><?= $viaje['DESTINO'] ?></td>
               <td><?= $viaje['PRECIO_BASE'] ?></td>
               <td>
-                <a href="#" class="btn btn-sm btn-success btn-crud" title="Añadir"><i class="bi bi-plus"></i></a>
                 <a href="#" class="btn btn-sm btn-warning btn-crud" title="Editar"><i class="bi bi-pencil"></i></a>
                 <a href="#" class="btn btn-sm btn-danger btn-crud" title="Eliminar"><i class="bi bi-trash"></i></a>
               </td>
