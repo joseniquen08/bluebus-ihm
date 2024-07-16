@@ -34,6 +34,7 @@ $base_url = (isset($_SERVER["HTTPS"]) ? "https://" : "http://") . $_SERVER["HTTP
 
   <!-- Header -->
   <header class="container mt-5 mb-4 text-center">
+    <a href="<?= $base_url ?>/admin/inicio" class="btn btn-link">Volver</a>
     <h1 class="display-4">Mantenimiento de Reservas</h1>
   </header>
 
@@ -126,9 +127,8 @@ $base_url = (isset($_SERVER["HTTPS"]) ? "https://" : "http://") . $_SERVER["HTTP
               <td><?= $reserva['ID_ASIENTO'] ?></td>
               <td><?= $reserva['ESTADO'] ?></td>
               <td>
-                <a href="#" class="btn btn-sm btn-success btn-crud" title="Añadir"><i class="bi bi-plus"></i></a>
-                <a href="#" class="btn btn-sm btn-warning btn-crud" title="Editar"><i class="bi bi-pencil"></i></a>
-                <a href="#" class="btn btn-sm btn-danger btn-crud" title="Eliminar"><i class="bi bi-trash"></i></a>
+                <button type="button" class="btn btn-sm btn-warning btn-crud" data-bs-toggle="modal" data-bs-target="#editarEstadoModal" data-codigo-reserva="<?= $reserva['COD_RESERVA'] ?>"><i class="bi bi-pencil"></i></button>
+                <button type="button" class="btn btn-sm btn-danger btn-crud" onclick="eliminarReserva(<?= $reserva['COD_RESERVA'] ?>)"><i class="bi bi-trash"></i></button>
               </td>
             </tr>
           <?php endforeach; ?>
@@ -217,6 +217,13 @@ $base_url = (isset($_SERVER["HTTPS"]) ? "https://" : "http://") . $_SERVER["HTTP
           }
         });
       });
+
+      $("#editarEstadoModal").on("show.bs.modal", function(event) {
+        const button = event.relatedTarget
+        const codigo_reserva = button.getAttribute('data-codigo-reserva')
+
+        $("#codigo_reserva_edit").val(codigo_reserva)
+      })
     });
 
     // Función para eliminar reserva

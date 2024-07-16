@@ -42,5 +42,8 @@ $objRoutes->addRoute('api/admin/reservas/agregar', ['file' => 'api/admin/booking
 $objRoutes->addRoute('api/admin/reservas/editar', ['file' => 'api/admin/bookings/edit.php']);
 $objRoutes->addRoute('api/admin/reservas/eliminar', ['file' => 'api/admin/bookings/delete.php']);
 
+$objRoutes->addRoute('api/admin/usuarios/agregar', ['file' => 'api/admin/users/add.php']);
+$objRoutes->addRoute('api/admin/usuarios/editar', ['file' => 'api/admin/users/edit.php']);
+
 // Finally, ask our RoutMan to manage our routes.
 $objRoutes->manageRoutes();
