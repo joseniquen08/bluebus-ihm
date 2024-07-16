@@ -30,6 +30,7 @@ $base_url = (isset($_SERVER["HTTPS"]) ? "https://" : "http://") . $_SERVER["HTTP
   <?php require_once "components/navbar.php"; ?>
 
   <div class="container mt-5">
+    <a href="<?= $base_url ?>/admin/inicio" class="btn btn-link">Volver</a>
     <h2 class="text-center mb-4">Reporte de Ventas Realizadas</h2>
     <div class="table-responsive">
       <table class="table table-striped table-bordered text-center align-middle">

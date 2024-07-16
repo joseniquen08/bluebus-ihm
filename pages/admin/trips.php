@@ -30,6 +30,7 @@ $base_url = (isset($_SERVER["HTTPS"]) ? "https://" : "http://") . $_SERVER["HTTP
 
   <!-- Header -->
   <header class="container mt-5 mb-4 text-center">
+    <a href="<?= $base_url ?>/admin/inicio" class="btn btn-link">Volver</a>
     <h1 class="display-4">Mantenimiento de Viajes</h1>
   </header>
 
